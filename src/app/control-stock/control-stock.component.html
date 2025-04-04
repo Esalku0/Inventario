@@ -1,0 +1,90 @@
+<body>
+  <div class="back-button">
+    <button (click)="goBack()">&#8592; Volver</button>
+  </div>
+  <div class="logo">
+    <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="Logo" />
+  </div>
+  <main id="main-container">
+    <!-- Buscar Referencia -->
+    <section class="stock-search">
+      <legend><span class="number">🔍</span> Buscar Ref:</legend>
+      <label for="search-ref">Referencia: &nbsp;</label>
+      <input
+        type="text"
+        id="search-ref"
+        name="search-ref"
+        [(ngModel)]="inputRef"
+        placeholder="Ej. REF001"
+      />
+      @if (comprobacion) {
+      <h5>El articulo dispone de: {{this.cant}} de Stock</h5>
+      }
+      <button type="submit" (click)="referenchia()">Buscar</button>
+      <button type="button" (click)="cancelarBusqueda()">Cancelar</button>
+    </section>
+
+    <!-- Sistema para ENTRAR stock -->
+    @if (comprobacion) {
+    <aside class="stock-system stock-in">
+      <form (ngSubmit)="anyadir()">
+        <legend><span class="number">➕</span> Entrar Stock</legend>
+        <label for="ubicacion-add">Ubicación: &nbsp;</label>
+        <input
+          type="text"
+          id="ubicacion-add"
+          name="ubicacion-add"
+          [(ngModel)]="newMovement.location"
+          placeholder="Ej. UJB23"
+        />
+        <label for="datepicker">Fecha Entrada: &nbsp;</label>
+        <input
+          type="date"
+          id="datepicker"
+          name="datep"
+          [(ngModel)]="newMovement.entryDate"
+        />
+        <label for="add-qty">Cantidad: &nbsp;</label>
+        <input
+          type="number"
+          id="add-qty"
+          name="add-qty"
+          [(ngModel)]="newMovement.quantityEntry"
+          placeholder="Cantidad"
+        />
+        <button type="submit">Añadir</button>
+      </form>
+    </aside>
+
+    <aside class="stock-system stock-out">
+      <form (ngSubmit)="sacarStock()">
+        <legend><span class="number">➖</span> Sacar Stock</legend>
+        <label for="ubicacion-add">Ubicación: &nbsp;</label>
+        <input
+          type="text"
+          id="ubicacion-add"
+          name="ubicacion-add"
+          [(ngModel)]="newMovement.location"
+          placeholder="Ej. UJB23"
+        />
+        <label for="datepicker">Fecha Salida: &nbsp;</label>
+        <input
+          type="date"
+          id="datepicker"
+          name="datep"
+          [(ngModel)]="newMovement.consumptionDate"
+        />
+        <label for="add-qty">Cantidad: &nbsp;</label>
+        <input
+          type="number"
+          id="add-qty"
+          name="add-qty"
+          [(ngModel)]="newMovement.quantityRemoved"
+          placeholder="Cantidad"
+        />
+        <button type="submit">Retirar</button>
+      </form>
+    </aside>
+    }
+  </main>
+</body>

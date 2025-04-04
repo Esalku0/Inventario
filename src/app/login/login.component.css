@@ -1,0 +1,106 @@
+/* Fondo profesional con detalles naranjas */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #ffffff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #000000 30%, #ff6600 100%);
+}
+
+/* Contenedor principal */
+.login-container {
+    background-color: #ffffff; /* Fondo blanco */
+    border: 2px solid #ff6600; /* Naranja corporativo */
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.3); /* Sombra elegante */
+    width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Logo */
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 300px;
+    height: auto;
+}
+
+/* Título */
+.login-container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ff6600; /* Naranja corporativo */
+    font-weight: bold;
+}
+
+/* Inputs */
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 80%;
+    padding: 12px;
+    margin: 15px 0;
+    border: 1px solid #cccccc; /* Gris claro */
+    border-radius: 8px;
+    background-color: #f9f9f9; /* Fondo gris claro */
+    color: #333333; /* Texto gris oscuro */
+    font-size: 16px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #ff6600; /* Naranja corporativo */
+    background-color: #ffffff; /* Fondo blanco */
+    outline: none;
+}
+
+/* Botón */
+.login-container button {
+    background-color: #ff6600; /* Naranja corporativo */
+    border: none;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-container button:hover {
+    background-color: #e65c00; /* Naranja más oscuro */
+    transform: translateY(-3px);
+}
+
+/* Footer */
+.footer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666666; /* Gris medio */
+}
+
+.footer a {
+    color: #ff6600; /* Naranja corporativo */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #e65c00; /* Naranja más oscuro */
+    text-decoration: underline;
+}

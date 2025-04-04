@@ -1,0 +1,73 @@
+<body>
+    <!-- Botón de volver -->
+    <div class="back-button">
+      <button onclick="window.history.back()">&#8592; Volver</button>
+      <div class="textiUser">fabian</div>
+    </div>
+  
+    <!-- Contenedor principal -->
+    <div class="register-container">
+      <!-- Tabla de usuarios -->
+      <div class="users-table">
+        <h2>Proyectos Activos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Descripcion</th>
+              <th>Categoria</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se llenarán los datos dinámicamente -->
+            @for (item of arrProyectos; track item.nombre) {
+            <tr>
+              <td>{{ item.nombre }}</td>
+              <td>{{ item.descrip }}</td>
+              <td>{{ item.cliente }}</td>
+              <td><button>Borrar</button>
+                <button>Cambiar ESTADO</button></td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Formulario de registro -->
+      <div class="register-form">
+        <div class="logo-container">
+          <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="MDN" />
+        </div>
+        <h1>Añadir Proyecto</h1>
+        <form>
+          <input
+            type="text"
+            placeholder="Nombre"
+            name="nombre"
+            [(ngModel)]="this.newProyecto.nombre"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Descripcion"
+            name="descrip"
+            [(ngModel)]="this.newProyecto.descrip"
+            required
+          />
+          <input
+          type="text"
+          placeholder="Cliente"
+          name="cliente"
+          [(ngModel)]="this.newProyecto.cliente"
+          required
+        />
+  
+          <button type="submit" (click)="anyadirProyecto()">
+            Añadir
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+  

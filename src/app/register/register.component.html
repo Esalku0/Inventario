@@ -1,0 +1,124 @@
+<body>
+  <!-- Botón de volver -->
+  <div class="back-button">
+    <button onclick="window.history.back()">&#8592; Volver</button>
+    <div class="textiUser">fabian</div>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="register-container">
+    <!-- Tabla de usuarios -->
+    <div class="users-table">
+      <h2>Usuarios Registrados</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Departamento</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se llenarán los datos dinámicamente -->
+          @for (item of arrUsers; track item.nombre) {
+          <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.apellidos }}</td>
+            <td>{{ item.email }}</td>
+            @if (item.idRol==1) {
+            <td>admin</td>
+            }@else{
+            <td>usuario</td>
+            }
+            <td>{{ item.idDepartamento }}</td>
+            <td>
+              <button class="lista" (click)="borrarUsuario(item.id)">
+                Borrar
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Formulario de registro -->
+    <div class="register-form">
+      <div class="logo-container">
+        <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="MDN" />
+      </div>
+      <h1>Registrar usuario</h1>
+      <form>
+        <input
+          type="text"
+          placeholder="Nombre"
+          name="nombre"
+          [(ngModel)]="this.newUser.nombre"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Apellidos"
+          name="apellidos"
+          [(ngModel)]="this.newUser.apellidos"
+          required
+        />
+        <input
+          type="email"
+          placeholder="Correo Electrónico"
+          name="email"
+          [(ngModel)]="newUser.email"
+          required
+          pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$"
+          (blur)="validateEmail()"
+        />
+
+        <input
+          type="password"
+          placeholder="Contraseña"
+          name="contrasenya"
+          [(ngModel)]="this.newUser.contrasenya"
+          required
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{5,12}$"
+          (blur)="validatePassword()"
+        />
+
+        <!--
+<select id="type" name="typeId" [(ngModel)]="this.newArticle.idTipo">
+          @for (item of arrTypes; track item.name) {
+          <option [value]="item.idType">
+            {{ item.name }}
+          </option>
+          }
+        </select>          
+-->
+        <select required>
+          <option value="0" disabled selected>Seleccionar Rol</option>
+          <option value="1">Administrador</option>
+          <option value="2">Usuario</option>
+        </select>
+
+        <select
+          id="type"
+          name="typeId"
+          [(ngModel)]="this.newUser.idDepartamento"
+        >
+          <option value="0" disabled selected>Seleccionar Dept</option>
+
+          @for (item of arrDepts; track item.nombre) {
+          <option [value]="item.idDepartamento">
+            {{ item.nombre }}
+          </option>
+          }
+        </select>
+
+        <button type="submit" (click)="registrarUsuario()">
+          Registrar Usuario
+        </button>
+      </form>
+    </div>
+  </div>
+</body>

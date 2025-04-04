@@ -1,0 +1,19 @@
+<body>
+  <div class="login-container">
+    <div class="logo-container">
+      <img src="http://localhost:3000/assets/FORILogo.png" alt="Logo Corporativo" class="logo">    
+    </div>
+    <h1>Iniciar Sesión</h1>
+    <form>
+      <div class="input-group">
+        <input type="email" placeholder="Email" name="user" [(ngModel)]="this.username" required pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}"/>
+      </div>
+      <div class="input-group">
+        <input type="password" placeholder="Contraseña" name="pass" [(ngModel)]="password" required />
+      </div>
+      <button id="login" (click)="login()">Iniciar Sesión</button>
+    </form>
+    <div class="footer">
+    </div>
+  </div>
+</body>

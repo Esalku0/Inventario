@@ -1,0 +1,74 @@
+<head>
+  <link
+    href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet"
+  />
+</head>
+<body>
+  <div class="logout-container">
+    @if(true){
+    <button class="logout-button">
+      <mat-icon>notifications_none</mat-icon>
+    </button>
+    }@else{
+      <button class="logout-button">
+        <mat-icon>notifications_on</mat-icon>
+      </button>
+    }
+    <button class="logout-button" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+
+  <div class="logo">
+    <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="MDN" />
+  </div>
+
+  <div class="header">
+    <h1>
+      ¡Bienvenido <b>{{ this.newUser.nombre }}</b
+      >!
+    </h1>
+    <p>
+      Departamento: <span id="unidad">{{ this.newDept.nombre }}</span>
+    </p>
+  </div>
+
+  <div class="buttons">
+    @if(this.rol!=undefined){
+    <button class="button" routerLink="/viewArticles">
+      <mat-icon>search</mat-icon>
+      Consultar Artículos
+    </button>
+    } @if(this.rol=="1"){
+    <button class="button" routerLink="/controlStock">
+      <mat-icon>inventory</mat-icon>
+      Movimientos de Stock
+    </button>
+    <button class="button" routerLink="/AddArticle">
+      <mat-icon>add_circle</mat-icon>
+      Añadir Artículo
+    </button>
+    <button class="button" routerLink="/registerUser">
+      <mat-icon>person_add</mat-icon>
+      Añadir Usuario
+    </button>
+    <button class="button" routerLink="/AddCategory">
+      <mat-icon>category</mat-icon>
+      Añadir Categoría
+    </button>
+    <button class="button" routerLink="/AddType">
+      <mat-icon>style</mat-icon>
+      Añadir Tipo
+    </button>
+    <button class="button" routerLink="/AddUbicacion">
+      <mat-icon>location_on</mat-icon>
+      Añadir Ubicación
+    </button>
+    <button class="button" routerLink="/AddProyecto">
+      <mat-icon>business</mat-icon>
+      Añadir Proyecto
+    </button>
+    }
+  </div>
+</body>

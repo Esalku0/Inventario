@@ -1,0 +1,65 @@
+<body>
+    <!-- Botón de volver -->
+    <div class="back-button">
+      <button onclick="window.history.back()">&#8592; Volver</button>
+      <div class="textiUser">fabian</div>
+    </div>
+  
+    <!-- Contenedor principal -->
+    <div class="register-container">
+      <!-- Tabla de usuarios -->
+      <div class="users-table">
+        <h2>Ubicaciones Disponibles</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Descripcion</th>
+              <th>Accion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se llenarán los datos dinámicamente -->
+            @for (item of arrUbicaciones; track item.codigoUbicacion) {
+            <tr>
+              <td>{{ item.codigoUbicacion }}</td>
+              <td>{{ item.descrip }}</td>
+              <td><button>a</button></td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Formulario de registro -->
+      <div class="register-form">
+        <div class="logo-container">
+          <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="MDN" />
+        </div>
+        <h1>            Añadir Ubicacion
+        </h1>
+        <form>
+          <input
+            type="text"
+            placeholder="Nombre"
+            name="nombre"
+            [(ngModel)]="this.newUbicacion.codigoUbicacion"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Apellidos"
+            name="apellidos"
+            [(ngModel)]="this.newUbicacion.descrip"
+            required
+          />
+
+  
+          <button type="submit" (click)="anyadirUbicacion()">
+            Añadir 
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+  

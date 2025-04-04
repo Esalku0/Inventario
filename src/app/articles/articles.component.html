@@ -1,0 +1,83 @@
+<body>
+  <div class="back-button">
+    <button onclick="window.history.back()">&#8592; Volver</button>
+  </div>
+
+  <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="no"/>
+
+  <div class="main-container">
+    <div class="filter-container">
+      <input
+        type="text"
+        id="myInput"
+        class="input-search"
+        [(ngModel)]="this.inputFiltRef"
+        placeholder="Buscar por nombre..."
+        title="Escribe un nombre"
+        (change)="loadArticlesByName()"
+      />
+      <button class="botonet">Buscar</button>
+    </div>
+
+    <div class="table-wrapper">
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Referencia</th>
+              <th>ID Categoría</th>
+              <th>ID Tipo</th>
+              <th>Unidades</th>
+              <th>Modelo</th>
+              <th>Longitud</th>
+              <th>Diámetro</th>
+              <th>Peso</th>
+              <th>Altura</th>
+              <th>Unidad</th>
+              <th>Nº Serie</th>
+              <th>Marca</th>
+              <th>Detalles</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of arrArticulos">
+              <td>{{ item.id }}</td>
+              <td>{{ item.nombre }}</td>
+              <td class="category-column">
+                <ng-container *ngFor="let forin of arrCategories">
+                  <ng-container *ngIf="item.idCategoria == forin.idCategory">
+                    {{ forin.name }}
+                  </ng-container>
+                </ng-container>
+              </td>
+              <td class="type-column">
+                <ng-container *ngFor="let forin of arrTypes">
+                  <ng-container *ngIf="item.idTipo == forin.idType">
+                    {{ forin.name }}
+                  </ng-container>
+                </ng-container>
+              </td>
+              <td> <h4>{{ item.stock }}</h4></td>
+              <td>{{ item.modelo }}</td>
+              <td>{{ item.longitud }}</td>
+              <td>{{ item.diametro }}</td>
+              <td>{{ item.peso }}</td>
+              <td>{{ item.altura }}</td>
+              <td>{{ item.unidadMedida }}</td>
+              <td>{{ item.numSerie }}</td>
+              <td>{{ item.marca }}</td>
+              <td>{{ item.detalles }}</td>
+              <td class="actions-column">
+                <button class="action-btn btn-save" [routerLink]="['/viewMovements', item.id]">Ver Movimientos</button>
+                <button class="action-btn btn-save">Confirmar Stock</button>
+                <button class="action-btn btn-save">Cambiar Proyecto</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>

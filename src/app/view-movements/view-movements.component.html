@@ -1,0 +1,72 @@
+<body>
+  <div class="back-button">
+    <button onclick="window.history.back()">&#8592; Volver</button>
+  </div>
+
+  <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="no"/>
+
+  <div class="container">
+    <div class="filters">
+      <label for="filterCategory">Categoría:</label>
+      <select id="filterCategory">
+        <option value="all">Todas</option>
+        <option value="entry">Entrada</option>
+        <option value="consumption">Salida</option>
+      </select>
+
+
+      <label for="sortOrder">Orden:</label>
+      <select id="sortOrder">
+        <option value="asc">Ascendente</option>
+        <option value="desc">Descendente</option>
+      </select>
+
+      <button class="action-btn">Filtrar Movimiento</button>
+    </div>
+  <div class="table-wrapper">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID Artículo</th>
+            <th>DIN</th>
+            <th>Fecha de Entrada</th>
+            <th>Cantidad Recibida</th>
+            <th>Fecha de Consumo</th>
+            <th>Cantidad Removida</th>
+            <th>Removido Por</th>   
+            <th>Modelo</th>
+            <th>Stock Total</th>
+            <th>Ubicación</th>
+            <th>Cantidad a Ordenar</th>
+            <th>Solicitud Extra</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let item of movLista"
+            [ngClass]="{
+              entry: item.entryDate !== undefined,
+              consumption: item.consumptionDate != undefined
+            }"
+          >
+            <td>{{ this.newArticulo.nombre }}</td>
+            <td>{{ item.din }}</td>
+            <td>{{ item.entryDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ item.quantityEntry }}</td>
+            <td>{{ item.consumptionDate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ item.quantityRemoved }}</td>
+            <td>{{ item.removedBy }}</td>
+
+            <td>{{ item.model }}</td>
+            <td>{{ item.stock }}</td>
+            <td>{{ item.location }}</td>
+            <td>{{ item.quantityToOrder }}</td>
+            <td>{{ item.extraRequest }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+</body>

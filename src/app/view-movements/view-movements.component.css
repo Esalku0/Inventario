@@ -1,0 +1,187 @@
+/* Estilos generales */
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff6600 10%, #000000 100%);
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 98%;
+  max-width: 2300px;
+}
+
+/* Contenedor del filtro */
+.filters {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  justify-content: flex-start;
+  width: 98%;
+  max-width: 1300px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.filters label {
+  font-weight: bold;
+  color: #333;
+}
+
+.filters select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: 0.3s ease-in-out;
+  width: 180px;
+}
+
+.filters select:focus {
+  border-color: #ff6600;
+  box-shadow: 0px 0px 12px rgba(255, 102, 0, 0.5);
+}
+
+/* Botón de filtro alineado a la derecha */
+.filters .action-btn {
+  margin-left: auto;
+  align-self: flex-end;
+}
+
+/* Botón de filtro */
+.action-btn {
+  background-color: #ff6600;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn:hover {
+  background-color: #e65c00;
+  transform: scale(1.08);
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Contenedor de la tabla */
+.table-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  width: 100%;
+  /* Aumentar el max-width para hacerlo aún más ancho */
+  max-width: 2300px; /* Aumentar el max-width */
+}
+
+/* Contenedor principal de la tabla */
+.table-container {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 2300px; /* Aumentar el max-width para hacer la tabla más ancha */
+  overflow: a;
+}
+
+/* Tabla */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: auto; /* Cambiar a auto para que las celdas se ajusten mejor */
+}
+
+/* Estilos de las celdas */
+.table-container th, .table-container td {
+  padding: 20px; /* Aumentar el padding de las celdas */
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  color: #000000;
+  word-wrap: break-word; /* Asegurar que el contenido largo no desborde */
+}
+
+/* Estilo de las cabeceras */
+.table-container th {
+  background-color: #ff6600;
+  color: white;
+  font-size: 16px;
+}
+
+/* Fila al pasar el ratón */
+.table-container tbody tr:hover {
+  background-color: #ffe6cc;
+}
+
+/* Estilo para diferenciar entradas y salidas */
+.entry {
+  background-color: rgba(0, 255, 0, 0.3); /* Verde claro */
+  font-weight: bold;
+}
+
+.consumption {
+  background-color: rgba(255, 0, 0, 0.3); /* Rojo claro */
+  font-weight: bold;
+}
+
+/* Botón de volver */
+.back-button {
+  width: 100%;
+  text-align: left;
+  padding: 15px 30px;
+  margin-left: 3%;
+}
+
+.back-button button {
+  background-color: #ff6600;
+  border: solid;
+  border-color: black;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.back-button button:hover {
+  background-color: #e65c00;
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Estilo para las cabeceras fijas */
+.table-container th {
+  position: sticky;
+  top: 0;  /* Mantiene las cabeceras pegadas en la parte superior */
+  background-color: #ff6600; /* Fondo del color de las cabeceras */
+  color: white;
+  z-index: 1; /* Asegura que las cabeceras queden sobre las filas */
+  border: #000000;
+}
+

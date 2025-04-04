@@ -1,0 +1,153 @@
+<body>
+  <div class="back-button">
+    <button onclick="window.history.back()">&#8592; Volver</button>
+  </div>
+
+  <div class="logo">
+    <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="Logo" />
+  </div>
+
+  <div class="container">
+    <fieldset class="form-section">
+      <legend>1. Datos Principales</legend>
+      <label> Categoría: </label>
+      <select
+        id="Cat"
+        name="catId"
+        [(ngModel)]="this.newArticle.idCategoria"
+        (change)="loadTypesById(this.newArticle.idCategoria)"
+      >
+        @for (item of arrCategories; track item.name) {
+        <option [value]="item.idCategory">{{ item.name }}</option>
+        }
+      </select>
+
+      <label> Tipo: </label>
+      <select id="type" name="typeId" [(ngModel)]="this.newArticle.idTipo">
+        @for (item of arrTypes; track item.name) {
+        <option [value]="item.idType">{{ item.name }}</option>
+        }
+      </select>
+      <label> Proyecto: </label>
+      <input
+        type="text"
+        class="txtaaa"
+        [(ngModel)]="this.newArticle.idProyecto"
+        placeholder="Proyecto"
+      />
+    </fieldset>
+
+    <fieldset class="form-section">
+      <legend>2. Información Específica</legend>
+      <div class="radio-group">
+        <label
+          ><input
+            type="radio"
+            name="options"
+            [(ngModel)]="selectedOption"
+            value="medidas"
+          />
+          Medidas</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="options"
+            [(ngModel)]="selectedOption"
+            value="detalles"
+          />
+          Detalles Específicos</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="options"
+            [(ngModel)]="selectedOption"
+            value="otros"
+          />
+          Otros</label
+        >
+      </div>
+
+      @if (selectedOption=="medidas") {
+      <div class="flex-container">
+        <input
+          type="text"
+          [(ngModel)]="this.newArticle.longitud"
+          placeholder="Longitud"
+          value=""
+        />
+        <input
+          type="text"
+          [(ngModel)]="this.newArticle.diametro"
+          placeholder="Diámetro"
+        />
+        <input
+          type="text"
+          [(ngModel)]="this.newArticle.peso"
+          placeholder="Peso"
+        />
+        <input
+          type="text"
+          [(ngModel)]="this.newArticle.altura"
+          placeholder="Altura"
+        />
+      </div>
+      }@else if (selectedOption=="detalles") {
+      <div class="flex-container">
+        <input
+          type="text"
+          placeholder="Materiales"
+          [(ngModel)]="this.newArticle.materiales"
+        />
+        <input
+          type="text"
+          placeholder="Unidad de Medida"
+          [(ngModel)]="this.newArticle.unidadMedida"
+        />
+        <input
+          type="text"
+          placeholder="Condición"
+          [(ngModel)]="this.newArticle.condicion"
+        />
+        <input
+          type="text"
+          placeholder="Color"
+          [(ngModel)]="this.newArticle.color"
+        />
+      </div>
+      }@else {
+      <div class="flex-container">
+        <input type="text" placeholder="Modelo" [(ngModel)]="this.newArticle.modelo"/>
+        <input type="text" placeholder="Num. Serie" [(ngModel)]="this.newArticle.numSerie"/>
+        <input type="text" placeholder="Marca" [(ngModel)]="this.newArticle.marca"/>
+      </div>
+      }
+    </fieldset>
+
+    <fieldset class="form-section">
+      <legend>3. Datos Adicionales</legend>
+      <textarea rows="5" placeholder="Detalles adicionales..." [(ngModel)]="this.newArticle.detalles"></textarea>
+      <br />
+      <label> Unidades: </label>
+      <input
+        type="number"
+        class="txtaaa"
+        [(ngModel)]="this.newArticle.stock"
+        placeholder="Unidades"
+      />
+      <label> Referencia: </label>
+      <input
+        class="txtaaa"
+        type="text"
+        id="ref"
+        name="ref"
+        [(ngModel)]="inputRef"
+        placeholder="EJ. TECCAB001"
+        (ngModelChange)="comprobarCodigoNombre()"
+      />
+
+      <button type="submit" *ngIf="okayRef" (click)="addArticle()">Add</button>
+    </fieldset>
+  </div>
+</body>

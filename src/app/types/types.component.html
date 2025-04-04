@@ -1,0 +1,80 @@
+<body>
+  <!-- Botón de volver -->
+  <div class="back-button">
+    <button onclick="window.history.back()">&#8592; Volver</button>
+    <div class="textiUser">fabian</div>
+  </div>
+
+  <!-- Contenedor principal -->
+  <div class="register-container">
+    <!-- Tabla de usuarios -->
+    <div class="users-table">
+      <h2>Tipos Disponibles</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripcion</th>
+            <th>Categoria</th>
+            <th>Accion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Aquí se llenarán los datos dinámicamente -->
+          @for (item of arrTypes; track item.name) {
+          <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.descrip }}</td>
+
+            @for (cat of arrCats; track $index) { @if
+            (item.idCategory==cat.idCategory) {
+            <td>{{ cat.name }}</td>
+            } }
+
+            <td>
+              <button class="lista" (click)="borrarTipo(item.idType)">
+                Borrar
+              </button>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Formulario de registro -->
+    <div class="register-form">
+      <div class="logo-container">
+        <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="MDN" />
+      </div>
+      <h1>Añadir Tipo</h1>
+      <form>
+        <input
+          type="text"
+          placeholder="Nombre"
+          name="nombre"
+          [(ngModel)]="this.newTipo.name"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Apellidos"
+          name="apellidos"
+          [(ngModel)]="this.newTipo.descrip"
+          required
+        />
+        <select id="idcat" name="catid" [(ngModel)]="this.newTipo.idCategory">
+          <option value="0" disabled selected>Seleccionar Cat</option>
+
+          @for (item of arrCats; track item.name) {
+          <option [value]="item.idCategory">
+            {{ item.name }}
+          </option>
+          }
+        </select>
+
+        <button type="submit" (click)="addNewType()">Añadir</button>
+      </form>
+    </div>
+  </div>
+</body>
