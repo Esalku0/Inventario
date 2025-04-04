@@ -69,10 +69,6 @@ export class ControlStockComponent {
     this.cargarNombreUsuario();
   }
 
-  ngOnInit(): void {
-    this.fecha = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD
-  }
-
   loadCategories(): void {
     this.categorieService.getAllCategorias().subscribe({
       next: (data: any) => {
@@ -135,11 +131,18 @@ export class ControlStockComponent {
 
 
   anyadir(): void {
+
+
+
     this.comprobarReferencia(() => {
       console.log(this.comprobacion);
       if (!this.comprobacion) {
         this.openDialog();
       } else {
+
+
+        const currentDateAndTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', 'Africa/Johannesburg');
+        this.newMovement.entryDate = currentDateAndTime ? new Date(currentDateAndTime) : new Date();
         this.movementService.addMovement(this.newMovement).subscribe({
           next: (data: any) => {
             this.cant = this.stock + this.newMovement.quantityEntry;
@@ -159,7 +162,7 @@ export class ControlStockComponent {
   today: number = Date.now();
 
   sacarStock() {
-    const currentDateAndTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss');
+    const currentDateAndTime = this.datePipe.transform(new Date(), 'yyyy-MM-dd HH:mm:ss', 'Europe/Madrid');
     this.newMovement.consumptionDate = currentDateAndTime ? new Date(currentDateAndTime) : new Date();
 
     this.newMovement.removedBy = this.newUser.nombre;
@@ -327,6 +330,9 @@ export class ControlStockComponent {
           this.stock = article.stock ?? 0; // Si no tiene stock, asumimos 0
           break;
         }
+      }
+      if(this.comprobacion===false){
+        this.openDialog();
       }
     });
   }

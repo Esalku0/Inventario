@@ -24,7 +24,7 @@
             <tr>
               <td>{{ item.codigoUbicacion }}</td>
               <td>{{ item.descrip }}</td>
-              <td><button>a</button></td>
+              <td><button class="lista">Borrar</button></td>
             </tr>
             }
           </tbody>
@@ -48,8 +48,8 @@
           />
           <input
             type="text"
-            placeholder="Apellidos"
-            name="apellidos"
+            placeholder="Descripcion"
+            name="Descripcion"
             [(ngModel)]="this.newUbicacion.descrip"
             required
           />

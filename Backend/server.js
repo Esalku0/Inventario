@@ -123,6 +123,8 @@ app.post("/registro", async (req, res) => {
     const query =
       "INSERT INTO usuarios (nombre, apellidos, email, contrasenya, idRol,idDepartamento) VALUES (?, ?, ?, ?, ?,?)";
 
+      console.log(query, [nombre, apellidos, email, hashedPassword,idRol,idDepartamento]);
+
     db.query(query, [nombre, apellidos, email, hashedPassword,idRol,idDepartamento], (err, result) => {
       if (err) {
         console.error("Error en la base de datos:", err);
@@ -143,6 +145,7 @@ app.post("/login", (req, res) => {
   console.log("Datos recibidos:", req.body);
   const { usuario, pass } = req.body; // Capturamos los datos enviados.
   console.log(req.body.username);
+  console.log(req.body.password);
   db.query("SELECT id, idRol, contrasenya FROM usuarios WHERE email = ?", req.body.username, async (err, result) => {
     console.log("aqui");
     if (err) {
