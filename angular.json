@@ -18,6 +18,7 @@
             },
             "production": {
               "aot": true,
+              "outputPath": "dist/Inventario",
               "extractLicenses": true,
               "namedChunks": false,
               "optimization": true,
@@ -29,7 +30,7 @@
             "assets": [],
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "outputPath": "dist/demo",
+            "outputPath": "dist/Inventario",
             "polyfills": ["zone.js"],
             "scripts": [],
             "styles": [
