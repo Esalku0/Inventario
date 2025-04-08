@@ -95,11 +95,11 @@ body {
 
 .button:hover {
   background: #ff9900;
-  transform: scale(1.05);
+  transform: scale(0.88);
 }
 
 .button:active {
-  transform: scale(0.98);
+  transform: scale(0.88);
   background: #e68a00;
 }
 
