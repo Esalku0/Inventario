@@ -11,13 +11,6 @@ body {
   min-height: 100vh;
 }
 
-header {
-  background-color: #2c3e50;
-  color: white;
-  padding: 30px 0; /* Aumenté el padding para que se vea más grande */
-  text-align: center;
-}
-
 .lblHeader {
   font-size: 3em; /* Aumenté el tamaño de la fuente */
   margin: 0;
@@ -62,13 +55,13 @@ fieldset {
 
 legend {
   font-weight: bold;
-  color: #007bff;
+  color: #ff6600;
   font-size: 1.5em; /* Aumenté el tamaño de la fuente */
   margin-bottom: 20px;
 }
 
 .number {
-  background: #007bff;
+  background: #f7bf07;
   color: white;
   border-radius: 100%;
   padding: 8px 14px; /* Aumenté el padding */
@@ -100,7 +93,7 @@ select {
 }
 
 button {
-  background-color: #007bff;
+  background-color: #ff6600;
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -111,7 +104,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #e65c00;
   transform: scale(1.05); /* Aumenté el efecto de escala */
 }
 
@@ -161,7 +154,7 @@ footer p {
 }
 
 .stock-in legend {
-  color: #007bff;
+  color: orange;
 }
 
 .stock-out legend {

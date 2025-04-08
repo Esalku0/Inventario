@@ -16,13 +16,16 @@ import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { UsuariosService } from '../services/usuarios.service';
 import { Users, UsersSinMap } from '../POJOs/users';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
   selector: 'app-control-stock',
   templateUrl: './control-stock.component.html',
   styleUrl: './control-stock.component.css',
-  imports: [FormsModule]
+  imports: [FormsModule,
+    
+  ]
 })
 export class ControlStockComponent {
   selectedDate: Date | undefined;
@@ -49,6 +52,7 @@ export class ControlStockComponent {
   dialog: MatDialog = inject(MatDialog);
   router: Router = inject(Router);
   datePipe: DatePipe = inject(DatePipe);
+  popup:ToastrService=inject(ToastrService);
   usuario: string = "";
 
   newUser: Users = {
@@ -150,6 +154,7 @@ export class ControlStockComponent {
               next: (data: any) => {
                 console.log('Movimiento agregado exitosamente', data);
                 this.vaciarObjeto();
+                this.showSuccess();
               }, error: this.handleError
             });
           },
@@ -182,6 +187,7 @@ export class ControlStockComponent {
             this.artService.updateStock(this.newArticle.id, this.cant).subscribe({
               next: (data: any) => {
                 this.vaciarObjeto();
+                this.showSuccess();
               }, error: this.handleError
             })
           }, error: this.handleError
@@ -335,6 +341,10 @@ export class ControlStockComponent {
         this.openDialog();
       }
     });
+  }
+
+  showSuccess() {
+    this.popup.success('¡Movimiento realizado correctamente!', '¡Perfecto!');
   }
 
 }
