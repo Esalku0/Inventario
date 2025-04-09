@@ -11,6 +11,7 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { ArticulosService } from '../services/articulos.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatePipe } from '@angular/common'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-article',
@@ -24,7 +25,7 @@ export class AddArticleComponent {
   newArticle: Articles = {
     id: 0,
     nombre: '',
-    descrip:'',
+    descrip: '',
     idCategoria: 0,
     idProyecto: '',
     idTipo: 0,
@@ -55,7 +56,7 @@ export class AddArticleComponent {
     descrip: '',
     idCategory: 0
   }
-
+  popup: ToastrService = inject(ToastrService);
   artService: ArticulosService = inject(ArticulosService);
   categorieService: CategoriesService = inject(CategoriesService);
   arrCategories: Categories[] = [];
@@ -75,7 +76,6 @@ export class AddArticleComponent {
   loadCategories() {
     this.categorieService.getAllCategorias().subscribe((data: any) => {
       this.arrCategories = new CategoriesMap().get(data);
-
     });
   }
 
@@ -105,32 +105,19 @@ export class AddArticleComponent {
     var iniType: string;
     var iniRef: string;
 
-    console.log("Bonicoibarato " + this.newArticle.idCategoria);
-    console.log("Z " + this.newArticle.idTipo);
-
     this.cargarNombreCat();
     this.cargarNombreTyp();
-    //pillamos las variables y les metemos las iniciales del valor devuelto de la petición
-    //const varApoyo1:Categories = this.categorieService.getNameCatById(this.newArticle.idCategoria);
-    //console.log(varApoyo1);
 
     iniCat = this.objCat.name.toString().substring(0, 3)
     iniType = this.objType.name.toString().substring(0, 3);
     //pillamos el valor del input, para comprararl con las variables y comprobar que la referencia es correcta
     iniRef = this.inputRef.toString().substring(0, 6);
-    console.log("CAT " + iniCat);
-    console.log("typ " + iniType);
-    console.log("refe " + iniRef);
     if (iniRef.toUpperCase() == iniCat.concat(iniType).toUpperCase()) {
       this.okayRef = true;
-      console.log("BO1" + iniRef);
-      console.log(this.newArticle.nombre);
       iniRef = this.newArticle.nombre;
-      console.log("modificado " + this.newArticle.nombre);
     } else {
       this.okayRef = false;
     }
-
   }
 
   addArticle() {
@@ -141,18 +128,20 @@ export class AddArticleComponent {
     this.newArticle.nombre = this.inputRef;
 
     this.artService.addArticulo(this.newArticle).subscribe({
-      next: (response) => { 
-        console.log('Respuesta del backend:', response); 
+      next: (response) => {
+        console.log('Respuesta del backend:', response);
+        this.showSuccess();
         this.vaciarObjeto(); // Ahora se ejecuta correctamente
       },
       error: (err) => {
+        this.showError();
         console.error('Error al enviar artículo:', err);
         if (err instanceof HttpErrorResponse) {
           console.error('Contenido de la respuesta:', err.error); // Para ver el cuerpo de la respuesta
         }
       }
     });
-}
+  }
 
 
   mostrarCampos: boolean = false;
@@ -165,7 +154,7 @@ export class AddArticleComponent {
   getFechaFormatoMySQL(): string {
     const fecha = new Date();
     const año = fecha.getFullYear();
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Mes empieza en 0
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
     const dia = fecha.getDate().toString().padStart(2, '0');
     const horas = fecha.getHours().toString().padStart(2, '0');
     const minutos = fecha.getMinutes().toString().padStart(2, '0');
@@ -174,11 +163,11 @@ export class AddArticleComponent {
     return `${año}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
   }
 
-  vaciarObjeto(){
+  vaciarObjeto() {
     this.newArticle = {
       id: 0,
       nombre: '',
-      descrip:'',
+      descrip: '',
       idCategoria: 0,
       idProyecto: '',
       idTipo: 0,
@@ -196,10 +185,16 @@ export class AddArticleComponent {
       marca: undefined,
       detalles: undefined,
       dateCreation: this.currentDate,
-      userCreation: 'admin',
+      userCreation: '',
     };
   }
 
+  showSuccess() {
+    this.popup.success('¡Movimiento realizado correctamente!', '¡Perfecto!');
+  }
 
+  showError() {
+    this.popup.error('¡El movimiento no se ha podido realizar!', 'Error!');
+  }
 
 }
