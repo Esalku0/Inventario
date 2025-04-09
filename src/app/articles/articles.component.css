@@ -141,6 +141,7 @@ body {
   font-size: 14px;
   font-weight: bold;
   transition: 0.3s ease-in-out;
+  width: 100%;
 }
 
 .action-btn:hover {
