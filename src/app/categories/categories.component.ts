@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { ArticulosService } from '../services/articulos.service';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
@@ -26,6 +27,7 @@ export class CategoriesComponent {
   };
 
   arrCategories: Categories[] = [];
+  popup: ToastrService = inject(ToastrService);
 
   constructor() {
     this.loadAllCategories();
@@ -43,6 +45,24 @@ export class CategoriesComponent {
       this.loadAllCategories();
     });
     // this.refresh();
+  }
+  borrarCategoria(id:number){
+    this.catService.delete(id).subscribe((data:any)=>{
+      if (data) {
+        this.showSuccess();
+      }else{
+        this.showSuccess();
+      }
+    });
+  }
+
+
+  showSuccess() {
+    this.popup.success('¡Movimiento realizado correctamente!', '¡Perfecto!');
+  }
+
+  showError() {
+    this.popup.error('¡El movimiento no se ha podido realizar!', 'Error!');
   }
 
 }

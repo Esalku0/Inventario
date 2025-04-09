@@ -4,6 +4,7 @@ import { ProyectosService } from '../services/proyectos.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-proyectos',
@@ -19,11 +20,12 @@ export class ProyectosComponent {
     nombre: '',
     descrip: '',
     cliente: '',
-    estado:''
+    estado: ''
   };
 
   arrProyectos: Proyectos[] = [];
   proService: ProyectosService = inject(ProyectosService);
+  popup: ToastrService = inject(ToastrService);
 
   constructor() {
     this.cargarProyectos();
@@ -43,11 +45,30 @@ export class ProyectosComponent {
         nombre: '',
         descrip: '',
         cliente: '',
-        estado:""
+        estado: ""
       };
 
     });
   }
 
+
+  borrarProyecto(id: number) {
+    this.proService.deleteProyectosById(id).subscribe((data: any) => {
+      if (data) {
+        this.showSuccess();
+        this.cargarProyectos();
+      }else{
+        this.showError();
+      }
+    });
+  }
+
+  showSuccess() {
+    this.popup.success('¡Proyecto eliminado correctamente!', '¡Perfecto!');
+  }
+
+  showError() {
+    this.popup.error('¡El borrado de proyecto no se ha podido realizar!', 'Error!');
+  }
 
 }

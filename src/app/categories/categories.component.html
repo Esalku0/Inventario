@@ -24,7 +24,7 @@
           <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.descrip }}</td>
-            <td><button class="lista">Borrar</button></td>
+            <td><button class="lista" (click)="borrarCategoria(item.idCategory)">Borrar</button></td>
           </tr>
           }
         </tbody>
@@ -34,7 +34,7 @@
     <!-- Formulario de registro -->
     <div class="register-form">
       <div class="logo-container">
-        <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="MDN" />
+        <img src="http://192.168.1.58:3002/assets/FORILogoRedi.png" alt="MDN" />
       </div>
       <h1>Registrar Categoria</h1>
       <form>

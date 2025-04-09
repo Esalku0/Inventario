@@ -4,6 +4,7 @@ import { UbicacionesService } from '../services/ubicaciones.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ubicaciones',
@@ -21,6 +22,7 @@ export class UbicacionesComponent {
   }
   arrUbicaciones: Ubicaciones[] = [];
   ubiService: UbicacionesService = inject(UbicacionesService);
+  popup: ToastrService = inject(ToastrService);
 
   constructor() {
     this.cargarTodasUbicaciones();
@@ -43,6 +45,24 @@ export class UbicacionesComponent {
       }
 
     });
+  }
+  borrarUbicacion(id:number){
+    this.ubiService.deleteUbicacionesById(id).subscribe((data:any)=>{
+        if (data) {
+          this.showSuccess();
+          this.cargarTodasUbicaciones();
+        }else{
+          this.showError();
+        }
+    });
+  }
+
+  showSuccess() {
+    this.popup.success('¡Ubicacion eliminada correctamente!', '¡Perfecto!');
+  }
+
+  showError() {
+    this.popup.error('¡El borrado de ubicación no se ha podido realizar!', 'Error!');
   }
 
 

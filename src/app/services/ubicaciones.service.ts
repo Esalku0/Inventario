@@ -26,6 +26,6 @@ export class UbicacionesService {
   }
 
   deleteUbicacionesById(id: number){
-    return this.httpClient.delete(this.API_ENDPOINT + "/" + id);
+    return this.httpClient.delete(this.API_ENDPOINT + "/" + id,{responseType: 'text'});
   }
 }

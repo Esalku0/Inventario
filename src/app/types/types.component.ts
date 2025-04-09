@@ -8,6 +8,7 @@ import { TypesService } from '../services/types.service';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -28,6 +29,7 @@ export class TypesComponent {
 
   typService: TypesService = inject(TypesService);
   catService: CategoriesService = inject(CategoriesService);
+  popup: ToastrService = inject(ToastrService);
 
   constructor() {
     this.loadTypes();
@@ -59,10 +61,23 @@ export class TypesComponent {
     });
   }
 
-  borrarTipo(id:number){
-    this.typService.deleteType(id).subscribe((data:any)=>{
-         this.loadTypes();
+  borrarTipo(id: number) {
+    this.typService.deleteType(id).subscribe((data: any) => {
+      if (data) {
+        this.showSuccess();
+        this.loadTypes();
+      } else {
+        this.showError();
+      }
     });
+  }
+
+  showSuccess() {
+    this.popup.success('¡Movimiento realizado correctamente!', '¡Perfecto!');
+  }
+
+  showError() {
+    this.popup.error('¡El movimiento no se ha podido realizar!', 'Error!');
   }
 
 }
