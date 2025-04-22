@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'; // Manejo de respuestas HTTP asíncronas.
   providedIn: 'root' // Hace que el servicio esté disponible en toda la app.
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000';
+  private apiUrl = 'http://192.168.1.60:3002';
 
   constructor(private http: HttpClient) { }
 

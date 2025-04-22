@@ -4,12 +4,19 @@ const mysql = require("mysql"); // Módulo para conectar a la base de datos MySQ
 const cors = require("cors"); // Permite realizar peticiones desde distintos dominios (CORS).
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken"); // Para generar tokens JWT
+const http = require('http');
 
 const path = require('path');
 
 const app = express(); // Inicializamos la aplicación de Express.
 app.use(cors()); // Habilitamos CORS para permitir el acceso desde otros orígenes.
 app.use(express.json()); // Permite procesar datos en formato JSON que llegan en las solicitudes.
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+
+const port = process.env.PORT || 0;
 
 // 🔌 Configuración de la base de datos MySQL
 const db = mysql.createConnection({
@@ -103,6 +110,38 @@ const tablas = [
 // 🔄 Creación de todas las rutas dinámicamente
 tablas.forEach(t => createFilteredGetRoute(t.nombre, t.clave));
 
+
+// Ruta POST para insertar un nuevo artículo y generar su movimiento de entrada
+app.post("/articles-add", (req, res) => {
+  console.log("📌 Insertando nuevo artículo...");
+  
+  db.query("INSERT INTO articles SET ?", req.body, (err, result) => {
+    if (err) return res.status(500).send(err); // 🚨 Manejo de errores
+    
+    const newArticleId = result.insertId; // 🔥 Obtiene el ID del artículo recién insertado
+
+    // 📌 Crear el movimiento de entrada automático
+    const movementData = {
+      idArticle: newArticleId,
+      entryDate: new Date(), // 🗓 Fecha actual
+      stock: req.body.stock, // 🔢 Stock inicial
+      quantityEntry: req.body.stock, // 🔢 Cantidad ingresada
+      location: req.body.location || "Sin ubicación", // 📍 Ubicación opcional
+      material: req.body.material || "No especificado",
+      model: req.body.modelo || "Desconocido"
+    };
+
+    db.query("INSERT INTO viewmovements SET ?", movementData, (err) => {
+      if (err) return res.status(500).send(err); // 🚨 Manejo de errores
+      
+      console.log("✅ Movimiento de entrada registrado");
+      res.json({ id: newArticleId, message: "Artículo añadido y movimiento registrado correctamente" });
+    });
+  });
+});
+
+
+
 // Ruta POST para registrar usuarios con contraseñas encriptadas
 
 app.post("/registro", async (req, res) => {
@@ -174,17 +213,12 @@ app.post("/login", (req, res) => {
       console.log("Contraseña incorrecta");
       return res.status(401).json({ error: "Usuario o contraseña incorrectos" });
     }
-    const token = jwt.sign({ id: user.id, IdRol: user.idRol }, "foriestanis", { expiresIn: "1h" });
+    const token = jwt.sign({ id: user.id, IdRol: user.idRol }, "foriestanis", { expiresIn: "15m" });
     console.log(token,user.id, user.idRol);
 
     res.json({ token,id: user.id, idRol: user.idRol });
   });
 });
-
-
-
-
-
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -234,11 +268,23 @@ app.get('/api/tipos-articulos', (req, res) => {
   });
 });
 
-
-
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
-// 🚀 Arrancamos el servidor en el puerto 3000
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+
+
+app.use(express.static(path.join(__dirname, "..", "dist", "inventario", "browser")));
+
+// Redirigir todas las rutas a `index.html`
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "dist", "inventario", "browser", "index.html"));
+});
+
+// Si tienes alguna carpeta de 'assets', puedes configurarla así
+
+// Crear el servidor HTTP
+const server = http.createServer(app);
+
+// Escuchar en un puerto dinámico (0 dejará que el sistema seleccione uno)
+server.listen(3002, '0.0.0.0', () => {
+  const address = server.address();
+  console.log(`Servidor Express corriendo en http://0.0.0.0:${address.port}`);
 });

@@ -121,12 +121,14 @@ export class AddArticleComponent {
   }
 
   addArticle() {
+    console.log("NUMERIN",this.newArticle.numSerie ,"NUMERIN");
+
     const fechaString = this.getFechaFormatoMySQL(); // Obtenemos la fecha en formato MySQL
     const fechaDate = new Date(fechaString); // Convertimos la cadena a objeto Date
 
     this.newArticle.dateCreation = fechaDate; // Asignamos correctamente la fecha
     this.newArticle.nombre = this.inputRef;
-
+    console.log(this.newArticle.numSerie ,"NUMERIN");
     this.artService.addArticulo(this.newArticle).subscribe({
       next: (response) => {
         console.log('Respuesta del backend:', response);

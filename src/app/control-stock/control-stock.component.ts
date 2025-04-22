@@ -122,7 +122,6 @@ export class ControlStockComponent {
           this.newArticle = article;
           this.newMovement.idArticle = article.id;
           this.stock = article.stock ?? 0; // Si no tiene stock, asumimos 0
-          console.log(this.newArticle.stock, "nig", this.cant);
           this.cant = this.newArticle.stock ?? 0;
           break;
         }

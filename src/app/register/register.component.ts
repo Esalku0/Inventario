@@ -36,6 +36,7 @@ export class RegisterComponent {
   }
 
   registrarUsuario() {
+    console.log();
     console.log("test");
     this.usuService.addUsuario(this.newUser).subscribe({
       next: (data: any) => {

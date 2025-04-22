@@ -28,8 +28,11 @@ export class ArticulosService {
   }
 
   addArticulo(newArt: Articles) {
+    var rrutafinal=ruta+"/articles-add";
+
+    console.log(newArt);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post(this.rutafinal, newArt, { headers });
+    return this.httpClient.post(rrutafinal, newArt, { headers });
   }
   
 
@@ -39,7 +42,7 @@ export class ArticulosService {
   }
 
   getTiposArticulos() {
-    return this.httpClient.get<any>('http://localhost:3000/api/tipos-articulos'); // Llama a la API del backend
+    return this.httpClient.get('http://192.168.1.60:3002/api/tipos-articulos'); // Llama a la API del backend
   }
   
 

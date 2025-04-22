@@ -4,7 +4,7 @@
   </div>
 
   <div class="logo">
-    <img src="http://localhost:3000/assets/FORILogoRedi.png" alt="Logo" />
+    <img src="http://192.168.1.60:3002/assets/FORILogoRedi.png" alt="Logo" />
   </div>
 
   <div class="container">
@@ -118,16 +118,32 @@
       </div>
       }@else {
       <div class="flex-container">
-        <input type="text" placeholder="Modelo" [(ngModel)]="this.newArticle.modelo"/>
-        <input type="text" placeholder="Num. Serie" [(ngModel)]="this.newArticle.numSerie"/>
-        <input type="text" placeholder="Marca" [(ngModel)]="this.newArticle.marca"/>
+        <input
+          type="text"
+          placeholder="Modelo"
+          [(ngModel)]="this.newArticle.modelo"
+        />
+        <input
+          type="text"
+          placeholder="Num. Serie"
+          [(ngModel)]="this.newArticle.numSerie"
+        />
+        <input
+          type="text"
+          placeholder="Marca"
+          [(ngModel)]="this.newArticle.marca"
+        />
       </div>
       }
     </fieldset>
 
     <fieldset class="form-section">
       <legend>3. Datos Adicionales</legend>
-      <textarea rows="5" placeholder="Detalles adicionales..." [(ngModel)]="this.newArticle.detalles"></textarea>
+      <textarea
+        rows="5"
+        placeholder="Detalles adicionales..."
+        [(ngModel)]="this.newArticle.detalles"
+      ></textarea>
       <br />
       <label> Unidades: </label>
       <input
@@ -145,6 +161,7 @@
         [(ngModel)]="inputRef"
         placeholder="EJ. TECCAB001"
         (ngModelChange)="comprobarCodigoNombre()"
+        required=""
       />
 
       <button type="submit" *ngIf="okayRef" (click)="addArticle()">Add</button>
