@@ -42,6 +42,7 @@ export class AddArticleComponent {
     numSerie: undefined,
     marca: undefined,
     detalles: undefined,
+    imagen:'',
     dateCreation: this.currentDate,
     userCreation: 'admin',
   };
@@ -67,6 +68,7 @@ export class AddArticleComponent {
   inputRef: string = '';
 
   okayRef: boolean = true;
+  selectedFile: File | "" = "";
 
   constructor() {
     this.loadCategories();
@@ -108,6 +110,7 @@ export class AddArticleComponent {
     this.cargarNombreCat();
     this.cargarNombreTyp();
 
+    console.log("aqui estamos");
     iniCat = this.objCat.name.toString().substring(0, 3)
     iniType = this.objType.name.toString().substring(0, 3);
     //pillamos el valor del input, para comprararl con las variables y comprobar que la referencia es correcta
@@ -121,7 +124,9 @@ export class AddArticleComponent {
   }
 
   addArticle() {
-    console.log("NUMERIN",this.newArticle.numSerie ,"NUMERIN");
+
+    const formData = new FormData();
+
 
     const fechaString = this.getFechaFormatoMySQL(); // Obtenemos la fecha en formato MySQL
     const fechaDate = new Date(fechaString); // Convertimos la cadena a objeto Date
@@ -129,7 +134,11 @@ export class AddArticleComponent {
     this.newArticle.dateCreation = fechaDate; // Asignamos correctamente la fecha
     this.newArticle.nombre = this.inputRef;
     console.log(this.newArticle.numSerie ,"NUMERIN");
-    this.artService.addArticulo(this.newArticle).subscribe({
+
+    formData.append('articulos', JSON.stringify(this.newArticle));
+    formData.append('image', this.selectedFile);
+    console.log(formData.get("image"));
+    this.artService.addArticulo(formData).subscribe({
       next: (response) => {
         console.log('Respuesta del backend:', response);
         this.showSuccess();
@@ -186,9 +195,11 @@ export class AddArticleComponent {
       numSerie: undefined,
       marca: undefined,
       detalles: undefined,
+      imagen:'',
       dateCreation: this.currentDate,
       userCreation: '',
     };
+    this.selectedFile="";
   }
 
   showSuccess() {
@@ -197,6 +208,14 @@ export class AddArticleComponent {
 
   showError() {
     this.popup.error('¡El movimiento no se ha podido realizar!', 'Error!');
+  }
+
+  onFileSelected(event: any): void {
+    console.log("Evento detectado", event);
+    console.log("pasa por aqui");
+    this.selectedFile = event.target.files[0];
+    console.log("pasa por aqui");
+    console.log( this.selectedFile);
   }
 
 }

@@ -18,6 +18,7 @@ export interface Articles {
   numSerie: number | undefined;
   marca: string | undefined;
   detalles: string | undefined;
+  imagen:string|undefined;
   dateCreation: Date|undefined;
   userCreation: string;
 }
@@ -49,6 +50,7 @@ export class ArticlesMap {
         numSerie: val.numSerie,
         marca: val.marca,
         detalles: val.detalles,
+        imagen:val.imagen,
         dateCreation: val.dateCreation,
         userCreation: val.userCreation,
       };
@@ -80,6 +82,7 @@ export class ArticulosSinMap {
         numSerie: data[0].numSerie,
         marca: data[0].marca,
         detalles: data[0].detalles,
+        imagen:data[0].imagen,
         dateCreation: data[0].dateCreation,
         userCreation: data[0].userCreation,
       };

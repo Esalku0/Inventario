@@ -44,7 +44,8 @@ export class ViewMovementsComponent {
     color: undefined,
     numSerie: undefined,
     marca: undefined,
-    detalles: undefined
+    detalles: undefined,
+    imagen:''
   }
   newMovement: ViewMovements = {
     id:0,

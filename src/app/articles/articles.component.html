@@ -3,7 +3,7 @@
     <button onclick="window.history.back()">&#8592; Volver</button>
   </div>
 
-  <img src="http://192.168.1.60:3002/assets/FORILogoRedi.png" alt="no"/>
+  <img src="http://192.168.1.60:3002/assets/FORILogoRedi.png" alt="no" />
 
   <div class="main-container">
     <div class="filter-container">
@@ -24,7 +24,7 @@
         <table>
           <thead>
             <tr>
-              <th>ID</th>
+              <th></th>
               <th>Referencia</th>
               <th>ID Categoría</th>
               <th>ID Tipo</th>
@@ -40,8 +40,17 @@
           </thead>
           <tbody>
             <tr *ngFor="let item of arrArticulos">
-              <td>{{ item.id }}</td>
-              <td>{{ item.nombre }}</td>
+              <td>
+                <a [href]="'http://192.168.1.60:3002' + item.imagen" download>
+                  <mat-icon>visibility</mat-icon> 
+                </a>
+                
+              </td>
+
+              <td>
+                {{ item.nombre }}
+              </td>
+
               <td class="category-column">
                 <ng-container *ngFor="let forin of arrCategories">
                   <ng-container *ngIf="item.idCategoria == forin.idCategory">
@@ -57,15 +66,22 @@
                 </ng-container>
               </td>
               <td>{{ item.numSerie }}</td>
-              <td> <h4>{{ item.stock }}</h4></td>
+              <td>
+                <h4>{{ item.stock }}</h4>
+              </td>
               <td>{{ item.modelo }}</td>
-             
+
               <td>{{ item.unidadMedida }}</td>
 
               <td>{{ item.marca }}</td>
               <td>{{ item.detalles }}</td>
               <td class="actions-column">
-                <button class="action-btn btn-save" [routerLink]="['/viewMovements', item.id]">Ver Movimientos</button>
+                <button
+                  class="action-btn btn-save"
+                  [routerLink]="['/viewMovements', item.id]"
+                >
+                  Ver Movimientos
+                </button>
                 <button class="action-btn btn-save">Confirmar Stock</button>
                 <button class="action-btn btn-save">Cambiar Proyecto</button>
               </td>

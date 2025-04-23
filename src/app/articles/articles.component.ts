@@ -8,10 +8,11 @@ import { CategoriesService } from '../services/categories.service';
 import { TypesService } from '../services/types.service';
 import { Types, TypesMap } from '../POJOs/types';
 import { Categories, CategoriesMap } from '../POJOs/categories';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-articles',
-  imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet],
+  imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet,MatIconModule],
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.css',
 })
@@ -21,6 +22,7 @@ export class ArticlesComponent {
   arrTypes: Types[] = [];
   inputFiltRef: string = '';
   supparrArticulos: Articles[] = [];
+  
 
   newArticle: Articles = {
     id: 0,
@@ -43,6 +45,7 @@ export class ArticlesComponent {
     numSerie: undefined,
     marca: undefined,
     detalles: undefined,
+    imagen:'',
     descrip: ''
   };
 
@@ -86,5 +89,6 @@ export class ArticlesComponent {
       this.arrTypes = new TypesMap().get(data);
     });
   }
+
 
 }

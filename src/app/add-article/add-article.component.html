@@ -152,6 +152,8 @@
         [(ngModel)]="this.newArticle.stock"
         placeholder="Unidades"
       />
+      <label for="foto">Foto:</label>
+      <input type="file" (change)="onFileSelected($event)" id="foto" />
       <label> Referencia: </label>
       <input
         class="txtaaa"

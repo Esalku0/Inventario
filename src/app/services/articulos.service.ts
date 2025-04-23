@@ -27,12 +27,13 @@ export class ArticulosService {
     return this.httpClient.get(this.rutafinal +"?nombre="+name);
   }
 
-  addArticulo(newArt: Articles) {
+
+  addArticulo(newArt: FormData) {
     var rrutafinal=ruta+"/articles-add";
 
-    console.log(newArt);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" + newArt);
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post(rrutafinal, newArt, { headers });
+    return this.httpClient.post(rrutafinal, newArt);
   }
   
 
@@ -41,9 +42,6 @@ export class ArticulosService {
     return this.httpClient.put(this.rutafinal + '/' + newArt.id, newArt, { headers: headers });
   }
 
-  getTiposArticulos() {
-    return this.httpClient.get('http://192.168.1.60:3002/api/tipos-articulos'); // Llama a la API del backend
-  }
   
 
   updateStock(idArticle: number, stock: number) {

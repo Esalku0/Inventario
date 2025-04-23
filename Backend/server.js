@@ -3,6 +3,8 @@ const express = require("express"); // Framework para crear el servidor y maneja
 const mysql = require("mysql"); // Módulo para conectar a la base de datos MySQL.
 const cors = require("cors"); // Permite realizar peticiones desde distintos dominios (CORS).
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+
 const jwt = require("jsonwebtoken"); // Para generar tokens JWT
 const http = require('http');
 
@@ -11,6 +13,9 @@ const path = require('path');
 const app = express(); // Inicializamos la aplicación de Express.
 app.use(cors()); // Habilitamos CORS para permitir el acceso desde otros orígenes.
 app.use(express.json()); // Permite procesar datos en formato JSON que llegan en las solicitudes.
+
+app.use(express.urlencoded({ extended: true }));
+
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -77,6 +82,9 @@ function createFilteredGetRoute(table, idField) {
     });
   });
 
+
+  //MANEJADORES PUT
+
   // Ruta PUT para actualizar un registro existente por su ID
   app.put(`/${table}/:id`, (req, res) => {
     db.query(`UPDATE ${table} SET ? WHERE ${idField} = ?`, [req.body, req.params.id], err => {
@@ -112,7 +120,7 @@ tablas.forEach(t => createFilteredGetRoute(t.nombre, t.clave));
 
 
 // Ruta POST para insertar un nuevo artículo y generar su movimiento de entrada
-app.post("/articles-add", (req, res) => {
+app.post("/articles-add-2", (req, res) => {
   console.log("📌 Insertando nuevo artículo...");
   
   db.query("INSERT INTO articles SET ?", req.body, (err, result) => {
@@ -267,6 +275,77 @@ app.get('/api/tipos-articulos', (req, res) => {
       });
   });
 });
+
+
+//
+//
+//
+//
+//
+//EALIAGA CAMBIOS EMPEZAR
+//
+//
+//
+//
+//
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Ruta para subir datos y una imagen
+    cb(null, "./assets/articulos");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // Generar un nombre único para evitar conflictos
+  },
+});
+console.log("1", storage);
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 }, 
+});
+
+app.post("/articles-add", upload.single("image"), async (req, res) => {
+  
+  console.log("📸 Archivo recibido:", req.file);
+  console.log("articulos");
+  console.log(req.body.articulos);
+
+  if (!req.file || !req.body.articulos) {
+    return res.status(400).send("Faltan datos en la solicitud");
+  }
+  //Pillamos el artista
+  const articulo = JSON.parse(req.body.articulos);
+  articulo.imagen = `/assets/articulos/${req.file.filename}`;
+
+  db.query("INSERT INTO articles SET ?", articulo, (err, result) => {
+    if (err) return res.status(500).send(err); // 🚨 Manejo de errores
+
+    const newArticleId = result.insertId; // 🔥 Obtiene el ID del artículo recién insertado
+
+    // 📌 Crear el movimiento de entrada automático
+    const movementData = {
+      idArticle: newArticleId,
+      entryDate: new Date(), // 🗓 Fecha actual
+      stock: req.body.stock, // 🔢 Stock inicial
+      quantityEntry: req.body.stock, // 🔢 Cantidad ingresada
+      location: req.body.location || "Sin ubicación", // 📍 Ubicación opcional
+      material: req.body.material || "No especificado",
+      model: req.body.modelo || "Desconocido",
+    };
+
+    db.query("INSERT INTO viewmovements SET ?", movementData, (err) => {
+      if (err) return res.status(500).send(err); // 🚨 Manejo de errores
+
+      console.log("✅ Movimiento de entrada registrado");
+      res.json({
+        id: newArticleId,
+        message: "Artículo añadido y movimiento registrado correctamente",
+      });
+    });
+  });
+});
+
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 

@@ -246,7 +246,8 @@ export class ControlStockComponent {
       color: undefined,
       numSerie: undefined,
       marca: undefined,
-      detalles: undefined
+      detalles: undefined,
+      imagen:''
     };
   }
 
