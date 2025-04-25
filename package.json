@@ -14,7 +14,7 @@
     "@angular/core": "^19.0.6",
     "@angular/forms": "^19.0.6",
     "@angular/localize": "^19.0.6",
-    "@angular/material": "^19.2.1",
+    "@angular/material": "^19.2.11",
     "@angular/platform-browser": "^19.0.6",
     "@angular/router": "^19.0.6",
     "@progress/kendo-angular-buttons": "18.5.1",
@@ -45,6 +45,7 @@
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
     "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.2",
@@ -54,6 +55,7 @@
     "rxjs": "^7.8.1",
     "sequelize": "^6.37.6",
     "tslib": "^2.5.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {

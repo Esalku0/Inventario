@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { ControlStockComponent } from './control-stock/control-stock.component';
 import { UbicacionesComponent } from './ubicaciones/ubicaciones.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
+import { ExportacionesComponent } from './exportaciones/exportaciones.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent, title: 'login' },
@@ -25,5 +26,8 @@ export const routes: Routes = [
   { path: 'registerUser', component: RegisterComponent, title: 'Registro Usuario', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
   { path: 'controlStock', component: ControlStockComponent, title: 'Gestionar Stock', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
   { path: 'AddUbicacion', component: UbicacionesComponent, title: 'Añadir Ubicaciones', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
-  { path: 'AddProyecto', component: ProyectosComponent, title: 'Añadir Proyectos', canActivate: [() => inject(AuthGuard).logeadoYadmin()] }
+  { path: 'AddProyecto', component: ProyectosComponent, title: 'Añadir Proyectos', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
+  { path: 'apapa', component: ExportacionesComponent, title: 'Añadir aaa', canActivate: [() => inject(AuthGuard).logeadoYadmin()] }
+
+  
 ];

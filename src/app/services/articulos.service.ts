@@ -22,9 +22,9 @@ export class ArticulosService {
 
 
 
-  getAllArticlesByName(name: string) {
-    console.log(this.rutafinal +"?nombre="+name);
-    return this.httpClient.get(this.rutafinal +"?nombre="+name);
+  getAllArticlesByName(name: string,filtro:string) {
+    console.log(this.rutafinal +"?"+filtro+"="+name);
+    return this.httpClient.get(this.rutafinal +"?"+filtro+"="+name);
   }
 
 

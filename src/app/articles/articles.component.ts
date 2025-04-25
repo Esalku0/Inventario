@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-articles',
-  imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet,MatIconModule],
+  imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet, MatIconModule],
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.css',
 })
@@ -22,7 +22,7 @@ export class ArticlesComponent {
   arrTypes: Types[] = [];
   inputFiltRef: string = '';
   supparrArticulos: Articles[] = [];
-  
+
 
   newArticle: Articles = {
     id: 0,
@@ -45,7 +45,7 @@ export class ArticlesComponent {
     numSerie: undefined,
     marca: undefined,
     detalles: undefined,
-    imagen:'',
+    imagen: '',
     descrip: ''
   };
 
@@ -53,7 +53,7 @@ export class ArticlesComponent {
   catService: CategoriesService = inject(CategoriesService);
   typService: TypesService = inject(TypesService);
   startDate = new Date().toISOString().slice(0, 16);
-
+  campoSeleccionado = '';
   constructor() {
     this.loadArticles();
     this.loadCategories();
@@ -64,12 +64,47 @@ export class ArticlesComponent {
     this.arService.getAllArticles().subscribe((data: any) => {
       this.arrArticulos = new ArticlesMap().get(data);
     });
-
   }
 
   loadArticlesByName() {
-    this.arService.getAllArticlesByName(this.inputFiltRef).subscribe((data: any) => {
+
+    if (this.campoSeleccionado == "idCategoria") {
+      console.log("seleccionas categoria");
+      for (let index = 0; index < this.arrCategories.length; index++) {
+
+        if (this.inputFiltRef == "" || this.inputFiltRef == null) {
+          break;
+        }
+
+        if (this.arrCategories[index].name.includes(this.inputFiltRef) || 
+            this.arrCategories[index].name.includes(this.inputFiltRef.toUpperCase()) || 
+            this.arrCategories[index].name.includes(this.inputFiltRef.toLowerCase())) {
+          console.log(this.inputFiltRef);
+          console.log(this.arrCategories[index].name);
+
+          this.inputFiltRef = String(this.arrCategories[index].idCategory);
+        }
+      }
+    }
+
+    if (this.campoSeleccionado == "idTipo") {
+      for (let index = 0; index < this.arrTypes.length; index++) {
+
+        if (this.inputFiltRef == "" || this.inputFiltRef == null) {
+          break;
+        }
+
+        if (this.arrTypes[index].name.includes(this.inputFiltRef) ||
+            this.arrTypes[index].name.includes(this.inputFiltRef.toUpperCase())||
+            this.arrTypes[index].name.includes(this.inputFiltRef.toLowerCase())) {
+          this.inputFiltRef = String(this.arrTypes[index].idType);
+        }
+      }
+    }
+
+    this.arService.getAllArticlesByName(this.inputFiltRef, this.campoSeleccionado).subscribe((data: any) => {
       this.arrArticulos = new ArticlesMap().get(data);
+
     });
 
   }

@@ -7,6 +7,16 @@
 
   <div class="main-container">
     <div class="filter-container">
+      <select [(ngModel)]="campoSeleccionado">
+        <option value="nombre" selected>Nombre</option>
+        <option value="descrip">Descripción</option>
+        <option value="idCategoria">Categoria</option>
+        <option value="idTipo">Tipo</option>
+        <option value="modelo">Modelo</option>
+        <option value="numSerie">Nº Serie</option>
+
+      </select>
+
       <input
         type="text"
         id="myInput"
@@ -32,7 +42,6 @@
               <th>Unidades</th>
               <th>Modelo</th>
               <th>Medida</th>
-
               <th>Marca</th>
               <th>Detalles</th>
               <th>Acciones</th>
