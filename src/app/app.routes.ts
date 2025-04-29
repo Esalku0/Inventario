@@ -27,7 +27,7 @@ export const routes: Routes = [
   { path: 'controlStock', component: ControlStockComponent, title: 'Gestionar Stock', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
   { path: 'AddUbicacion', component: UbicacionesComponent, title: 'Añadir Ubicaciones', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
   { path: 'AddProyecto', component: ProyectosComponent, title: 'Añadir Proyectos', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
-  { path: 'apapa', component: ExportacionesComponent, title: 'Añadir aaa', canActivate: [() => inject(AuthGuard).logeadoYadmin()] }
+  { path: 'ExportarArticulos', component: ExportacionesComponent, title: 'Añadir aaa', canActivate: [() => inject(AuthGuard).logeadoYadmin()] }
 
   
 ];

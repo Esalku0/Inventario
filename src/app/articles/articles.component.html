@@ -14,7 +14,6 @@
         <option value="idTipo">Tipo</option>
         <option value="modelo">Modelo</option>
         <option value="numSerie">Nº Serie</option>
-
       </select>
 
       <input
@@ -27,7 +26,22 @@
         (change)="loadArticlesByName()"
       />
       <button class="botonet">Buscar</button>
+
     </div>
+
+    <div class="filter-cococo">
+
+        <mat-form-field class="mat-form-field">
+          <mat-label>Selecciona los campos</mat-label>
+          <mat-select multiple [(value)]="seleccionados">
+            <mat-option *ngFor="let item of columnas" [value]="item">{{ item }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <!-- Botón de exportar a Excel -->
+        <button class="action-btn btn-save" (click)="exportExcel()">EXPORTAR EXCEL</button>
+    </div>
+
 
     <div class="table-wrapper">
       <div class="table-container">
@@ -51,14 +65,11 @@
             <tr *ngFor="let item of arrArticulos">
               <td>
                 <a [href]="'http://192.168.1.60:3002' + item.imagen" download>
-                  <mat-icon>visibility</mat-icon> 
+                  <mat-icon>visibility</mat-icon>
                 </a>
-                
               </td>
 
-              <td>
-                {{ item.nombre }}
-              </td>
+              <td>{{ item.nombre }}</td>
 
               <td class="category-column">
                 <ng-container *ngFor="let forin of arrCategories">

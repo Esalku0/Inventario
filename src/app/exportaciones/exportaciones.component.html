@@ -1,12 +1,24 @@
-<mat-form-field>
-    <mat-label>Selecciona los campos</mat-label>
-    <mat-select multiple [(value)]="seleccionados">
-        @for (item of columnas; track $index) {
-      <mat-option [value]="$index">{{ item }}</mat-option>
-    }
-    </mat-select>
-  </mat-form-field>
-  
-  <button class="export-button" >Exportar</button>
-  
+<body>
+  <div class="back-button">
+    <button onclick="window.history.back()">&#8592; Volver</button>
+  </div>
 
+  <img src="http://192.168.1.60:3002/assets/FORILogoRedi.png" alt="no" />
+
+  <div class="main-container">
+
+    <div class="filter-cococo">
+        <mat-form-field class="mat-form-field">
+          <mat-label>Selecciona los campos</mat-label>
+          <mat-select multiple [(value)]="seleccionados">
+            <mat-option *ngFor="let item of columnas" [value]="item">{{ item }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <button class="action-btn btn-save" (click)="exportExcel()">EXPORTAR EXCEL</button>
+    </div>
+
+
+ 
+  </div>
+</body>

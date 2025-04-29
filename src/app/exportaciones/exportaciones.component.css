@@ -1,0 +1,246 @@
+/* 🌍 Estilos generales */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background: linear-gradient(135deg, #ff6600 10%, #000000 100%);
+    background-attachment: fixed;
+    background-size: cover;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* 🎯 Contenedor principal */
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 1500px;
+    overflow-x: auto;
+  }
+  
+  /* 🔎 Contenedor del filtro de búsqueda */
+  .filter-container {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    max-width: 600px;
+    margin-top: 20px;
+    backdrop-filter: blur(10px);
+  }
+  
+  /* 📝 Input de búsqueda */
+  .input-search {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #cccccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: 0.3s ease-in-out;
+  }
+  
+  select {
+    width: 30%;
+    max-width: 400px;
+    padding: 8px;
+    font-size: 14px;
+    border: 2px solid #cccccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .input-search:focus {
+    border-color: #ff6600;
+    box-shadow: 0px 0px 12px rgba(255, 102, 0, 0.5);
+  }
+  
+  /* 🎯 Botón de búsqueda */
+  .botonet {
+    background-color: #ff6600;
+    border: none;
+    color: white;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .botonet:hover {
+    background-color: #e65c00;
+    transform: scale(1.05);
+  }
+  
+  /* 🗂 Contenedor de la tabla */
+  .table-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    width: 100%;
+    max-width: 2000px;
+  }
+  
+  /* 📊 Contenedor principal de la tabla */
+  .table-container {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 2000px;
+    overflow-x: auto;
+  }
+  
+  /* 📌 Tabla ajustada para columnas más compactas */
+  .table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  /* ✍ Reducir espacio interno y hacer las columnas más compactas */
+  .table-container th,
+  .table-container td {
+    padding: 6px;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+  }
+  
+  /* 🎯 Estilo de las cabeceras */
+  .table-container th {
+    background-color: #ff6600;
+    color: white;
+    font-size: 14px;
+  }
+  
+  /* 🎨 Fila al pasar el ratón */
+  .table-container tbody tr:hover {
+    background-color: #ffe6cc;
+  }
+  
+  /* 🏷 Columnas específicas */
+  .category-column,
+  .type-column {
+    font-weight: bold;
+  }
+  
+  /* 🔘 Botones más compactos */
+  .action-btn {
+    background-color: #ff6600;
+    border: none;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: 0.3s ease-in-out;
+    width: 100%;
+  }
+  
+  .action-btn:hover {
+    background-color: #e65c00;
+    transform: scale(1.05);
+  }
+  
+  /* 🔙 Botón de volver */
+  .back-button {
+    width: 100%;
+    text-align: left;
+    padding: 10px 20px;
+    margin-left: 3%;
+    margin-bottom: 20px;
+  }
+  
+  .back-button button {
+    background-color: #ff6600;
+    border: solid;
+    border-color: black;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .back-button button:hover {
+    background-color: #e65c00;
+    transform: translateY(-3px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* 🛠 Estilo para los campos seleccionables y el botón de exportación */
+  
+  mat-form-field{
+    width: 100%;
+  }
+  
+  .filter-cococo {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    display: inline;
+    justify-content: space-between; /* Esto distribuye el espacio entre los elementos */
+    align-items: center;
+    width: 90%;
+    max-width: 600px;
+    margin-top: 20px;
+  }
+  
+  .filter-cococo select {
+    flex: 1; /* Toma todo el espacio disponible a la izquierda */
+    padding: 8px;
+    font-size: 14px;
+    display: block;
+    border: 2px solid #cccccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .filter-cococo button {
+    background-color: #ff6600;
+    border: none;
+    display: block;
+    color: white;
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .filter-cococo button:hover {
+    background-color: #e65c00;
+    transform: scale(1.05);
+  }
+  

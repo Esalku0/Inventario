@@ -9,10 +9,13 @@ import { TypesService } from '../services/types.service';
 import { Types, TypesMap } from '../POJOs/types';
 import { Categories, CategoriesMap } from '../POJOs/categories';
 import { MatIconModule } from '@angular/material/icon';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-articles',
-  imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet, MatIconModule],
+  imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule],
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.css',
 })
@@ -22,6 +25,8 @@ export class ArticlesComponent {
   arrTypes: Types[] = [];
   inputFiltRef: string = '';
   supparrArticulos: Articles[] = [];
+
+
 
 
   newArticle: Articles = {
@@ -49,23 +54,71 @@ export class ArticlesComponent {
     descrip: ''
   };
 
+  seleccionados: string[] = [];
+ // columnas: string[] = ["Sanchez", "dimision", "perrro", "estafador", "ladron", "socialista", "terrorista"]
+ columnas: string[] = []
   arService: ArticulosService = inject(ArticulosService);
   catService: CategoriesService = inject(CategoriesService);
   typService: TypesService = inject(TypesService);
   startDate = new Date().toISOString().slice(0, 16);
   campoSeleccionado = '';
+
   constructor() {
+
     this.loadArticles();
     this.loadCategories();
     this.loadTypes();
   }
 
+  cargaCampo() {
+    for (var key in this.arrArticulos) {
+      console.log(' name=' + key);
+    }
+  }
+
+
   loadArticles() {
     this.arService.getAllArticles().subscribe((data: any) => {
       this.arrArticulos = new ArticlesMap().get(data);
+    //  this.cargaCampo();
+    
+      this.columnas=Object.keys(this.arrArticulos[0])
+
     });
   }
 
+
+  exportExcel() {
+    //creamos objeto filtros que tiene dentro un array
+    const filtros = { campos: this.seleccionados };
+
+    // Llamamos al servicio que genera y descarga el Excel
+    this.arService.exportarExcel(filtros).subscribe({
+      //el blob guarda los datos binarios del archivo, en este caso un excel
+      next: (blob: Blob) => {
+        // Creamos una URL temporal para el Blob recibido
+        const url = window.URL.createObjectURL(blob);
+  
+        // Creamos un <a> invisible para forzar la descarga
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'articulos.xlsx'; // Nombre del archivo a descargar
+        document.body.appendChild(a);
+        a.click(); // Simulamos el click para iniciar la descarga
+        a.remove(); // Limpiamos el <a> del DOM
+
+        console.log("Excel descargado correctamente");
+      },
+      error: (err) => {
+        console.error('Error al exportar Excel', err);
+        if (err instanceof HttpErrorResponse) {
+          console.error('Contenido de la respuesta:', err.error); // Si hubo error, mostramos más detalles
+        }
+      }
+    });
+  }
+  
+  
   loadArticlesByName() {
 
     if (this.campoSeleccionado == "idCategoria") {
@@ -76,9 +129,9 @@ export class ArticlesComponent {
           break;
         }
 
-        if (this.arrCategories[index].name.includes(this.inputFiltRef) || 
-            this.arrCategories[index].name.includes(this.inputFiltRef.toUpperCase()) || 
-            this.arrCategories[index].name.includes(this.inputFiltRef.toLowerCase())) {
+        if (this.arrCategories[index].name.includes(this.inputFiltRef) ||
+          this.arrCategories[index].name.includes(this.inputFiltRef.toUpperCase()) ||
+          this.arrCategories[index].name.includes(this.inputFiltRef.toLowerCase())) {
           console.log(this.inputFiltRef);
           console.log(this.arrCategories[index].name);
 
@@ -95,8 +148,8 @@ export class ArticlesComponent {
         }
 
         if (this.arrTypes[index].name.includes(this.inputFiltRef) ||
-            this.arrTypes[index].name.includes(this.inputFiltRef.toUpperCase())||
-            this.arrTypes[index].name.includes(this.inputFiltRef.toLowerCase())) {
+          this.arrTypes[index].name.includes(this.inputFiltRef.toUpperCase()) ||
+          this.arrTypes[index].name.includes(this.inputFiltRef.toLowerCase())) {
           this.inputFiltRef = String(this.arrTypes[index].idType);
         }
       }

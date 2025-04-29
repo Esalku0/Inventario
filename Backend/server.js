@@ -389,38 +389,87 @@ app.post("/articles-add", upload.single("image"), async (req, res) => {
   });
 });
 
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//       EXCEL     EXCEL     EXCEL     EXCEL     EXCEL    EXCEL EXCEL EXCEL    EXCEL     EXCEL     EXCEL     EXCEL     EXCEL     EXCEL 
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
 const ExcelJS = require("exceljs");
 
-app.get("/exportFiltro", (req, res) => {
-  const id = req.params.id;
-  const consulta = "SELECT * FROM articles";
+// POST que genera el Excel basado en los campos enviados
+app.post("/exportFiltro", async (req, res) => {
+  const { campos } = req.body; 
 
-  db.query(consulta, id, (err, results) => {
-    if (results.length == 0) {
-      res.send(200, "mala senyal");
+  console.log("Campos recibidos:", campos); 
+
+  // Si no se envían campos, usamos '*'
+  let seleccion = '*';
+
+  // Si recibimos campos y son válidos
+  //COMPROBAMOS SI HAY CAMPOS Y SI CAMPOS ES UNA ARRY DE CAMPOS Y SI NO ESTAN VACIOS
+  if (campos && Array.isArray(campos) && campos.length > 0) {
+    // Construimos la parte del SELECT escapando los nombres de columnas con backticks `nombre`
+    //RECORDEMOS QUE AL MAP NOS CREA UNA ARRAY COMO LA ORIGINAL DE FORMA SENCILLA,
+    //CREAMOS UNA ARRAY TIMIDILLA SEPARANDO CON COMAS
+    seleccion = campos.map(campo => `\`${campo}\``).join(", ");
+  }
+
+  // Armamos la consulta dinámica
+  const consulta = `SELECT ${seleccion} FROM articles`;
+
+  // Ejecutamos la consulta
+  db.query(consulta, async (err, results) => {
+    if (err) {
+      console.error(err); // Si falla la query, mandamos error 500
+      return res.status(500).send("Error en la consulta");
     }
+
+    if (results.length === 0) {
+      // Si no hay resultados, devolvemos un mensaje
+      return res.status(200).send("No se encontraron resultados");
+    }
+
+    // Creamos un nuevo Excel
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("Articulos");
 
+    // Definimos las columnas del Excel basándonos en el primer resultado
     const columnas = Object.keys(results[0]).map((key) => ({
-      header: key.toUpperCase(),
-      key,
-      width: 20,
+      header: key.toUpperCase(), // El nombre del header en mayúsculas
+      key,                       // El nombre real del campo
+      width: 20,                 // Ancho fijo de las columnas
     }));
+
     worksheet.columns = columnas;
 
-    for (let index = 0; index < results.length; index++) {
-      worksheet.addRow(results[index]);
-    }
+    // Agregamos todas las filas
+    results.forEach((item) => worksheet.addRow(item));
+
+    // Configuramos las cabeceras HTTP para enviar un archivo Excel
     res.setHeader(
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
-    res.setHeader("Content-Disposition", "attachment; filename=articulos.xlsx");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=articulos.xlsx"
+    );
 
-    workbook.xlsx.write(res);
+    // Escribimos el Excel directamente en la respuesta
+    await workbook.xlsx.write(res);
+
+    // Cerramos la respuesta
+    res.end();
   });
 });
+
+
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 

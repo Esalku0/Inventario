@@ -54,7 +54,8 @@ body {
   color: #333;
   transition: 0.3s ease-in-out;
 }
-select{
+
+select {
   width: 30%;
   max-width: 400px;
   padding: 8px;
@@ -113,34 +114,36 @@ select{
 .table-container table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed; /* 🔽 Hace que todas las columnas tengan un tamaño uniforme */
+  table-layout: fixed;
 }
 
 /* ✍ Reducir espacio interno y hacer las columnas más compactas */
-.table-container th, .table-container td {
-  padding: 6px; /* 🔽 Reduce el espacio entre contenido y borde */
-  font-size: 14px; /* 🔽 Ajusta el tamaño del texto */
+.table-container th,
+.table-container td {
+  padding: 6px;
+  font-size: 14px;
   text-align: center;
-  white-space: nowrap; /* 🔥 Evita saltos de línea innecesarios */
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* 💡 Muestra "..." si el texto es muy largo */
-  max-width: 120px; /* 📏 Ajusta el ancho máximo de las celdas */
+  text-overflow: ellipsis;
+  max-width: 120px;
 }
 
 /* 🎯 Estilo de las cabeceras */
 .table-container th {
-  background-color: #ff6600; /* 🔥 Manteniendo tu color original */
+  background-color: #ff6600;
   color: white;
   font-size: 14px;
 }
 
 /* 🎨 Fila al pasar el ratón */
 .table-container tbody tr:hover {
-  background-color: #ffe6cc; /* 🔥 Manteniendo tu color original */
+  background-color: #ffe6cc;
 }
 
 /* 🏷 Columnas específicas */
-.category-column, .type-column {
+.category-column,
+.type-column {
   font-weight: bold;
 }
 
@@ -191,10 +194,51 @@ select{
   transform: translateY(-3px);
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
 }
-/* Aplicar la configuración a todas las columnas */
-.table-container th, .table-container td {
-  min-width: 160px; /* 📏 Un ancho mínimo para mantener la estructura */
-  max-width: 280px; /* 🔥 Expansión controlada para evitar columnas excesivamente anchas */
-  white-space: normal; /* 🔄 Permitir saltos de línea */
-  overflow-wrap: break-word; /* 🚀 Evita que el contenido se solape con otras columnas */
+
+/* 🛠 Estilo para los campos seleccionables y el botón de exportación */
+
+mat-form-field{
+  width: 100%;
+}
+
+.filter-cococo {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: space-between; /* Esto distribuye el espacio entre los elementos */
+  align-items: center;
+  width: 90%;
+  max-width: 600px;
+  margin-top: 20px;
+}
+
+.filter-cococo select {
+  flex: 1; /* Toma todo el espacio disponible a la izquierda */
+  padding: 8px;
+  font-size: 14px;
+  display: block;
+  border: 2px solid #cccccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: 0.3s ease-in-out;
+}
+
+.filter-cococo button {
+  background-color: #ff6600;
+  border: none;
+  color: white;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.filter-cococo button:hover {
+  background-color: #e65c00;
+  transform: scale(1.05);
 }

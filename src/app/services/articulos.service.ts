@@ -53,4 +53,17 @@ export class ArticulosService {
     return this.httpClient.put(`${this.rutafinal}/${idArticle}`, body,{responseType: 'text'});
   }
 
+
+  exportarExcel(campos: any) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    console.log("http://localhost:3002/exportFiltro");
+    return this.httpClient.post(
+      "http://localhost:3002/exportFiltro",
+      campos, 
+      { headers: headers, responseType: 'blob' }
+    );
+  }
+  
+
 }
