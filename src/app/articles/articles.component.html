@@ -29,20 +29,6 @@
 
     </div>
 
-    <div class="filter-cococo">
-
-        <mat-form-field class="mat-form-field">
-          <mat-label>Selecciona los campos</mat-label>
-          <mat-select multiple [(value)]="seleccionados">
-            <mat-option *ngFor="let item of columnas" [value]="item">{{ item }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-  
-        <!-- Botón de exportar a Excel -->
-        <button class="action-btn btn-save" (click)="exportExcel()">EXPORTAR EXCEL</button>
-    </div>
-
-
     <div class="table-wrapper">
       <div class="table-container">
         <table>

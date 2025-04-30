@@ -6,6 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './confirm-dialog.component.html',
   styleUrls: ['./confirm-dialog.component.css'],
 })
+
 export class ConfirmDialogComponent {
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>) {}
 
