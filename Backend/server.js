@@ -364,7 +364,7 @@ app.post("/articles-add", upload.single("image"), async (req, res) => {
   db.query("INSERT INTO articles SET ?", articulo, (err, result) => {
     if (err) return res.status(500).send(err); // 🚨 Manejo de errores
 
-    const newArticleId = result.insertId; // 🔥 Obtiene el ID del artículo recién insertado
+    const newArticleId = result.insertId; 
 
     // 📌 Crear el movimiento de entrada automático
     const movementData = {
