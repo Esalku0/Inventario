@@ -362,9 +362,9 @@ app.post("/articles-add", upload.single("image"), async (req, res) => {
   articulo.imagen = `/assets/articulos/${req.file.filename}`;
 
   db.query("INSERT INTO articles SET ?", articulo, (err, result) => {
-    if (err) return res.status(500).send(err); // 🚨 Manejo de errores
+    if (err) return res.status(500).send(err);
 
-    const newArticleId = result.insertId; 
+    const newArticleId = result.insertId;
 
     // 📌 Crear el movimiento de entrada automático
     const movementData = {
@@ -389,27 +389,26 @@ app.post("/articles-add", upload.single("image"), async (req, res) => {
   });
 });
 
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//       EXCEL     EXCEL     EXCEL     EXCEL     EXCEL    EXCEL EXCEL EXCEL    EXCEL     EXCEL     EXCEL     EXCEL     EXCEL     EXCEL
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
 
-
-//--------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------
-//       EXCEL     EXCEL     EXCEL     EXCEL     EXCEL    EXCEL EXCEL EXCEL    EXCEL     EXCEL     EXCEL     EXCEL     EXCEL     EXCEL 
-//--------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------------------------------------------------------
 const ExcelJS = require("exceljs");
 
 // POST que genera el Excel basado en los campos enviados
 app.post("/exportFiltro", async (req, res) => {
-  const { campos } = req.body; 
+  const { campos } = req.body;
 
-  console.log("Campos recibidos:", campos); 
+  console.log("Campos recibidos:", campos);
 
   // Si no se envían campos, usamos '*'
-  let seleccion = '*';
+  let seleccion = "*";
 
   // Si recibimos campos y son válidos
   //COMPROBAMOS SI HAY CAMPOS Y SI CAMPOS ES UNA ARRY DE CAMPOS Y SI NO ESTAN VACIOS
@@ -417,11 +416,26 @@ app.post("/exportFiltro", async (req, res) => {
     // Construimos la parte del SELECT escapando los nombres de columnas con backticks `nombre`
     //RECORDEMOS QUE AL MAP NOS CREA UNA ARRAY COMO LA ORIGINAL DE FORMA SENCILLA,
     //CREAMOS UNA ARRAY TIMIDILLA SEPARANDO CON COMAS
-    seleccion = campos.map(campo => `\`${campo}\``).join(", ");
+    //
+    seleccion = campos.map((campo) => `\`${campo}\``).join(", ");
   }
+  var consulta = "";
+  //recorremos los campos y comprobamos si hemos marcado precio
+  //si hemos marcado precio, que nos saque el total del stock x el precio
+  //importante!!
+  campos.forEach((value, index) => {
+    if (value == "precio") {
+      console.log("visualizamos precio");
+      consulta = `SELECT ${seleccion}, (ar.precio*vm.stock) AS total FROM articles ar
+      INNER JOIN  viewmovements vm ON vm.idarticle = ar.id`;
+      console.log(consulta);
+    } else {
+      console.log("no visualizamos precio");
+      consulta = `SELECT ${seleccion} FROM articles`;
+    }
+  });
 
-  // Armamos la consulta dinámica
-  const consulta = `SELECT ${seleccion} FROM articles`;
+  // const consulta = `SELECT ${seleccion} FROM articles`;
 
   // Ejecutamos la consulta
   db.query(consulta, async (err, results) => {
@@ -442,8 +456,8 @@ app.post("/exportFiltro", async (req, res) => {
     // Definimos las columnas del Excel basándonos en el primer resultado
     const columnas = Object.keys(results[0]).map((key) => ({
       header: key.toUpperCase(), // El nombre del header en mayúsculas
-      key,                       // El nombre real del campo
-      width: 20,                 // Ancho fijo de las columnas
+      key, // El nombre real del campo
+      width: 20, // Ancho fijo de las columnas
     }));
 
     worksheet.columns = columnas;
@@ -456,10 +470,7 @@ app.post("/exportFiltro", async (req, res) => {
       "Content-Type",
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
-    res.setHeader(
-      "Content-Disposition",
-      "attachment; filename=articulos.xlsx"
-    );
+    res.setHeader("Content-Disposition", "attachment; filename=articulos.xlsx");
 
     // Escribimos el Excel directamente en la respuesta
     await workbook.xlsx.write(res);
@@ -468,8 +479,6 @@ app.post("/exportFiltro", async (req, res) => {
     res.end();
   });
 });
-
-
 
 app.use("/assets", express.static(path.join(__dirname, "assets")));
 
