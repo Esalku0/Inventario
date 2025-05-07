@@ -426,8 +426,7 @@ app.post("/exportFiltro", async (req, res) => {
   campos.forEach((value, index) => {
     if (value == "precio") {
       console.log("visualizamos precio");
-      consulta = `SELECT ${seleccion}, (ar.precio*vm.stock) AS total FROM articles ar
-      INNER JOIN  viewmovements vm ON vm.idarticle = ar.id`;
+      consulta = `SELECT ${seleccion}, (ar.precio*ar.stock) AS PrecioTotal FROM articles ar`;
       console.log(consulta);
     } else {
       console.log("no visualizamos precio");
