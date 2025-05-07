@@ -19,6 +19,7 @@ export interface Articles {
   marca: string | undefined;
   detalles: string | undefined;
   imagen:string|undefined;
+  precio: number|undefined;
   dateCreation: Date|undefined;
   userCreation: string;
 }
@@ -51,6 +52,7 @@ export class ArticlesMap {
         marca: val.marca,
         detalles: val.detalles,
         imagen:val.imagen,
+        precio:val.precio,
         dateCreation: val.dateCreation,
         userCreation: val.userCreation,
       };
@@ -83,6 +85,7 @@ export class ArticulosSinMap {
         marca: data[0].marca,
         detalles: data[0].detalles,
         imagen:data[0].imagen,
+        precio:data[0].precio,
         dateCreation: data[0].dateCreation,
         userCreation: data[0].userCreation,
       };

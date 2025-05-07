@@ -36,11 +36,8 @@ export class RegisterComponent {
   }
 
   registrarUsuario() {
-    console.log();
-    console.log("test");
     this.usuService.addUsuario(this.newUser).subscribe({
       next: (data: any) => {
-        console.log('Respuesta del backend:', data); // Confirmación de respuesta
         //vaciamos el objeto para dejar limpio loscampos del formlario
         this.newUser = {
           id: 0,
@@ -82,8 +79,7 @@ export class RegisterComponent {
 
     this.usuService.getAllUsuarios().subscribe((data: any) => {
       this.arrUsers = new UsersMap().get(data);
-      console.log("bona senyal");
-      console.log(this.arrUsers.length);
+
     })
   }
 

@@ -57,9 +57,9 @@ export class ArticulosService {
   exportarExcel(campos: any) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   
-    console.log("http://localhost:3002/exportFiltro");
+    console.log("http://192.168.1.60:3002/exportFiltro");
     return this.httpClient.post(
-      "http://localhost:3002/exportFiltro",
+      "http://192.168.1.60:3002/exportFiltro",
       campos, 
       { headers: headers, responseType: 'blob' }
     );

@@ -6,11 +6,9 @@ import { Types, TypesMap, TypesSinMap } from '../POJOs/types';
 import { CategoriesService } from '../services/categories.service';
 import { TypesService } from '../services/types.service';
 import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { ArticulosService } from '../services/articulos.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { DatePipe } from '@angular/common'
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -42,7 +40,8 @@ export class AddArticleComponent {
     numSerie: undefined,
     marca: undefined,
     detalles: undefined,
-    imagen:'',
+    imagen: '',
+    precio: undefined,
     dateCreation: this.currentDate,
     userCreation: 'admin',
   };
@@ -107,10 +106,8 @@ export class AddArticleComponent {
     var iniType: string;
     var iniRef: string;
 
-    this.cargarNombreCat();
-    this.cargarNombreTyp();
-
-    console.log("aqui estamos");
+    //this.cargarNombreCat();
+    //this.cargarNombreTyp();
     iniCat = this.objCat.name.toString().substring(0, 3)
     iniType = this.objType.name.toString().substring(0, 3);
     //pillamos el valor del input, para comprararl con las variables y comprobar que la referencia es correcta
@@ -196,6 +193,7 @@ export class AddArticleComponent {
       marca: undefined,
       detalles: undefined,
       imagen:'',
+      precio:0,
       dateCreation: this.currentDate,
       userCreation: '',
     };

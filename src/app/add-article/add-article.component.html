@@ -133,6 +133,11 @@
           placeholder="Marca"
           [(ngModel)]="this.newArticle.marca"
         />
+        <input
+        type="number"
+        placeholder="Precio"
+        [(ngModel)]="this.newArticle.precio" min="1"
+      />
       </div>
       }
     </fieldset>
@@ -162,11 +167,11 @@
         name="ref"
         [(ngModel)]="inputRef"
         placeholder="EJ. TECCAB001"
-        (ngModelChange)="comprobarCodigoNombre()"
         required=""
       />
-
-      <button type="submit" *ngIf="okayRef" (click)="addArticle()">Add</button>
+      <!--        (ngModelChange)="comprobarCodigoNombre()"        -->
+      <!--  <button type="submit" *ngIf="okayRef" (click)="addArticle()">Add</button>-->
+      <button type="submit" (click)="addArticle()">Add</button>
     </fieldset>
   </div>
 </body>

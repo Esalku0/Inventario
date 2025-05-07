@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { HttpErrorResponse } from '@angular/common/http';
+
 @Component({
   selector: 'app-articles',
   imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet, MatIconModule, MatFormFieldModule, MatInputModule, MatSelectModule],
@@ -50,6 +51,7 @@ export class ArticlesComponent {
     numSerie: undefined,
     marca: undefined,
     detalles: undefined,
+    precio: 0,
     imagen: '',
     descrip: ''
   };
@@ -81,7 +83,6 @@ export class ArticlesComponent {
     this.arService.getAllArticles().subscribe((data: any) => {
       this.arrArticulos = new ArticlesMap().get(data);
     //  this.cargaCampo();
-    
       this.columnas=Object.keys(this.arrArticulos[0])
 
     });

@@ -51,7 +51,8 @@ export class ExportacionesComponent {
     marca: undefined,
     detalles: undefined,
     imagen: '',
-    descrip: ''
+    descrip: '',
+    precio:0
   };
 
   seleccionados: string[] = [];

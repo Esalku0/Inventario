@@ -247,7 +247,8 @@ export class ControlStockComponent {
       numSerie: undefined,
       marca: undefined,
       detalles: undefined,
-      imagen:''
+      imagen:'',
+      precio:0
     };
   }
 
