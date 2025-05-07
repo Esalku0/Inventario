@@ -45,7 +45,8 @@ export class ViewMovementsComponent {
     numSerie: undefined,
     marca: undefined,
     detalles: undefined,
-    imagen:''
+    imagen:'',
+    precio:0
   }
   newMovement: ViewMovements = {
     id:0,
