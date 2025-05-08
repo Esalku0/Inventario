@@ -64,20 +64,24 @@ export class ControlStockComponent {
     idRol: 0,
     idDepartamento: 0
   }
-
+ 
   constructor() {
     this.loadCategories();
+ 
     this.loadTypesByIdCategory(this.newArticle.idCategoria);
-    this.usuario = this.authService.getIdUsuario();
-
+ 
+   this.usuario = this.authService.getIdUsuario();
+ 
     this.cargarNombreUsuario();
   }
-
-  loadCategories(): void {
+ 
+ 
+ loadCategories(): void {
     this.categorieService.getAllCategorias().subscribe({
       next: (data: any) => {
         this.arrCategories = new CategoriesMap().get(data);
         console.log('Respuesta del backend:', data);
+      
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error al cargar categorías:', err);
@@ -102,8 +106,8 @@ export class ControlStockComponent {
   }
   comprobacion: boolean = false;
 
-  // 🔄 Esta función busca un artículo por nombre y actualiza los datos necesarios
-  // Una vez terminado, ejecuta el callback que se le pasa
+  //Esta función busca un artículo por nombre y actualiza los datos necesarios
+  //Una vez terminado, ejecuta el callback que se le pasa
   //Un callback es simplemente una función que se pasa como argumento a otra función, para que se ejecute cuando termine algo
   //ES DECIR, NOSOTROS LE VAMOS A PASAR EL CODIGO EN LA FUNCIOND DE ANYADIR
   comprobarReferencia(callback: () => void): void {
@@ -127,16 +131,17 @@ export class ControlStockComponent {
         }
       }
 
-      // ✅ Una vez que termina todo el proceso, ejecutamos el callback
       callback();
     });
   }
 
-
   anyadir(): void {
 
+    //definimos funcion flecha para poder ejecutar dos funciones de suscripcion de forma asincrona.
     this.comprobarReferencia(() => {
+
       console.log(this.comprobacion);
+
       if (!this.comprobacion) {
         this.openDialog();
       } else {
