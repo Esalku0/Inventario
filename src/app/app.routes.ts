@@ -13,6 +13,7 @@ import { ControlStockComponent } from './control-stock/control-stock.component';
 import { UbicacionesComponent } from './ubicaciones/ubicaciones.component';
 import { ProyectosComponent } from './proyectos/proyectos.component';
 import { ExportacionesComponent } from './exportaciones/exportaciones.component';
+import { UpdateArticleComponent } from './update-article/update-article.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent, title: 'login' },
@@ -27,7 +28,7 @@ export const routes: Routes = [
   { path: 'controlStock', component: ControlStockComponent, title: 'Gestionar Stock', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
   { path: 'AddUbicacion', component: UbicacionesComponent, title: 'Añadir Ubicaciones', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
   { path: 'AddProyecto', component: ProyectosComponent, title: 'Añadir Proyectos', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
-  { path: 'ExportarArticulos', component: ExportacionesComponent, title: 'Añadir aaa', canActivate: [() => inject(AuthGuard).logeadoYadmin()] }
+  { path: 'ExportarArticulos', component: ExportacionesComponent, title: 'Exportaciones', canActivate: [() => inject(AuthGuard).logeadoYadmin()] },
+  { path: 'verArticulo/:id', component: UpdateArticleComponent, title: 'Modificar Articulos', canActivate: [() => inject(AuthGuard).estaLogeado()] }
 
-  
 ];

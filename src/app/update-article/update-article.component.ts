@@ -1,26 +1,25 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Articles } from '../POJOs/article';
+import { Articles, ArticulosSinMap } from '../POJOs/article';
 import { Categories, CategoriesMap, CategoriesSinMap } from '../POJOs/categories';
 import { Types, TypesMap, TypesSinMap } from '../POJOs/types';
 import { CategoriesService } from '../services/categories.service';
 import { TypesService } from '../services/types.service';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { ArticulosService } from '../services/articulos.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { UsuariosService } from '../services/usuarios.service';
-import { Users, UsersSinMap } from '../POJOs/users';
 
 @Component({
-  selector: 'app-add-article',
+  selector: 'app-update-article',
   imports: [FormsModule, CommonModule, RouterLink, RouterModule, RouterOutlet],
-  templateUrl: './add-article.component.html',
-  styleUrl: './add-article.component.css',
+  templateUrl: './update-article.component.html',
+  styleUrl: './update-article.component.css'
 })
 
-export class AddArticleComponent {
+
+export class UpdateArticleComponent {
   currentDate = new Date();
   newArticle: Articles = {
     id: 0,
@@ -58,24 +57,11 @@ export class AddArticleComponent {
     descrip: '',
     idCategory: 0
   }
-
-  newUsuario:Users={
-    id: 0,
-    nombre: '',
-    apellidos: '',
-    email: '',
-    contrasenya: '',
-    idRol: 0,
-    idDepartamento: 0
-  }
-  
   popup: ToastrService = inject(ToastrService);
   artService: ArticulosService = inject(ArticulosService);
   categorieService: CategoriesService = inject(CategoriesService);
   arrCategories: Categories[] = [];
   typesService: TypesService = inject(TypesService);
-  usuService:UsuariosService=inject(UsuariosService);
-
   arrTypes: Types[] = [];
 
   selectedOption: string = "";
@@ -83,16 +69,32 @@ export class AddArticleComponent {
 
   okayRef: boolean = true;
   selectedFile: File | "" = "";
+  route: ActivatedRoute = inject(ActivatedRoute);
 
   constructor() {
-    this.cargarDatosUsuario();
+    const idParam = this.route.snapshot.paramMap.get('id');
+    this.cargarDatosArticulo(Number(idParam));
     this.loadCategories();
-    this.loadTypesById(this.newArticle.idCategoria);
   }
+
+  cargarDatosArticulo(idArticulo: number) {
+
+    this.artService.getArticlesById(idArticulo).subscribe({
+      next: (data: any) => {
+        this.newArticle = new ArticulosSinMap().get(data);
+      }, error: (err: any) => {
+        console.error(err);
+      },
+    });
+
+  }
+
 
   loadCategories() {
     this.categorieService.getAllCategorias().subscribe((data: any) => {
       this.arrCategories = new CategoriesMap().get(data);
+      this.loadTypesById(this.newArticle.idCategoria);
+
     });
   }
 
@@ -102,7 +104,6 @@ export class AddArticleComponent {
       this.arrTypes = new TypesMap().get(data);
     });
   }
-  
   cargarNombreCat() {
     this.categorieService.getNameCatById(this.newArticle.idCategoria).subscribe((data: any) => {
       this.objCat = new CategoriesSinMap().get(data);
@@ -117,47 +118,17 @@ export class AddArticleComponent {
     });
   }
 
-  cargarDatosUsuario(){
-    console.log("debugger");
-   var idLocal:number= Number(localStorage.getItem("id"));
-    this.usuService.getUsuarioById(idLocal).subscribe((data:any)=>{
-      this.newUsuario=new UsersSinMap().get(data);
-
-      this.newArticle.userCreation=this.newUsuario.nombre;
-    });
-  }
-
-
-  comprobarCodigoNombre() {
-    //variables para dividir los codigos de los nombres
-    var iniCat: string;
-    var iniType: string;
-    var iniRef: string;
-
-    //this.cargarNombreCat();
-    //this.cargarNombreTyp();
-    iniCat = this.objCat.name.toString().substring(0, 3)
-    iniType = this.objType.name.toString().substring(0, 3);
-    //pillamos el valor del input, para comprararl con las variables y comprobar que la referencia es correcta
-    iniRef = this.inputRef.toString().substring(0, 6);
-    if (iniRef.toUpperCase() == iniCat.concat(iniType).toUpperCase()) {
-      this.okayRef = true;
-      iniRef = this.newArticle.nombre;
-    } else {
-      this.okayRef = false;
-    }
-  }
-
   addArticle() {
 
     const formData = new FormData();
+
 
     const fechaString = this.getFechaFormatoMySQL(); // Obtenemos la fecha en formato MySQL
     const fechaDate = new Date(fechaString); // Convertimos la cadena a objeto Date
 
     this.newArticle.dateCreation = fechaDate; // Asignamos correctamente la fecha
     this.newArticle.nombre = this.inputRef;
-    console.log(this.newArticle.numSerie ,"NUMERIN");
+    console.log(this.newArticle.numSerie, "NUMERIN");
 
     formData.append('articulos', JSON.stringify(this.newArticle));
     formData.append('image', this.selectedFile);
@@ -178,9 +149,27 @@ export class AddArticleComponent {
     });
   }
 
+  updateArticle() {
+    const formData = new FormData();
+
+    if (this.newArticle.imagen) {
+      formData.append("image", this.newArticle.imagen);
+    }
+  
+    formData.append('articulos', JSON.stringify(this.newArticle));
+
+    
+
+    this.artService.putArticulo(formData).subscribe({
+      next: () => {
+      
+      }, error: (error: any) => {
+        console.error(error);
+      },
+    });
+  }
 
   mostrarCampos: boolean = false;
-
   // Método para cambiar el estado de 'mostrarCampos'
   toggleCampos() {
     this.mostrarCampos = !this.mostrarCampos;
@@ -219,12 +208,12 @@ export class AddArticleComponent {
       numSerie: undefined,
       marca: undefined,
       detalles: undefined,
-      imagen:'',
-      precio:0,
+      imagen: '',
+      precio: 0,
       dateCreation: this.currentDate,
       userCreation: '',
     };
-    this.selectedFile="";
+    this.selectedFile = "";
   }
 
   showSuccess() {
@@ -240,7 +229,7 @@ export class AddArticleComponent {
     console.log("pasa por aqui");
     this.selectedFile = event.target.files[0];
     console.log("pasa por aqui");
-    console.log( this.selectedFile);
+    console.log(this.selectedFile);
   }
 
 }

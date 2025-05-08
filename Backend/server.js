@@ -113,7 +113,6 @@ function createFilteredGetRoute(table, idField) {
   });
 }
 
-// 🧩 Tablas y sus claves primarias para la generación dinámica de rutas
 const tablas = [
   { nombre: "articles", clave: "id" },
   { nombre: "categories", clave: "idCategory" },
@@ -389,6 +388,58 @@ app.post("/articles-add", upload.single("image"), async (req, res) => {
   });
 });
 
+//---------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------------
+//  PUT ARTICULOS PUT ARTICULOS PUT ARTICULOS PUT ARTICULOS PUT ARTICULOS PUT ARTICULOS PUT ARTICULOS PUT ARTICULOS PUT ARTICULOS
+//---------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------------------------------------
+
+const storagea = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Ruta para subir datos y una imagen
+    cb(null, "./assets/articulos");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); 
+  },
+});
+
+const uploada = multer({
+  storage,
+  limits: { fileSize: 50 * 1024 * 1024 },
+});
+
+app.put("/modificarArticulo/:id", uploada.single("image"), async (req, res) => {
+  console.log("entrem");
+  try {
+    let updatedFields = JSON.parse(req.body.articulos);
+
+    if (req.file) {
+      console.log("entramos1");
+
+      updatedFields.imagen = `/assets/articulos/${req.file.filename}`;
+    }
+
+    db.query(
+      "UPDATE articles SET ? WHERE id = ?",
+      [updatedFields, req.params.id],
+      (err, result) => {
+        if (err) {
+          console.log("Error en la consulta:", err);
+          return res.status(500).send(err);
+        }
+        console.log("Artículo actualizado correctamente:", result);
+        res.json({ message: "Artículo actualizado correctamente" });
+      }
+    );
+    
+  } catch (error) {
+    res.status(400).send("Error en la solicitud.");
+  }
+});
+
 //--------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------
@@ -400,6 +451,7 @@ app.post("/articles-add", upload.single("image"), async (req, res) => {
 //--------------------------------------------------------------------------------------------------------------------------------------
 
 const ExcelJS = require("exceljs");
+const { equal } = require("assert");
 
 // POST que genera el Excel basado en los campos enviados
 app.post("/exportFiltro", async (req, res) => {
@@ -431,6 +483,7 @@ app.post("/exportFiltro", async (req, res) => {
     } else {
       console.log("no visualizamos precio");
       consulta = `SELECT ${seleccion} FROM articles`;
+      console.log(consulta);
     }
   });
 

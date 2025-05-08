@@ -135,8 +135,6 @@ export class ControlStockComponent {
 
   anyadir(): void {
 
-
-
     this.comprobarReferencia(() => {
       console.log(this.comprobacion);
       if (!this.comprobacion) {
@@ -314,6 +312,7 @@ export class ControlStockComponent {
     this.referenciaError = false;
     this.comprobacion = false;
   }
+
   goBack(): void {
     window.history.back();
   }
@@ -343,6 +342,8 @@ export class ControlStockComponent {
       }
     });
   }
+
+
 
   showSuccess() {
     this.popup.success('¡Movimiento realizado correctamente!', '¡Perfecto!');

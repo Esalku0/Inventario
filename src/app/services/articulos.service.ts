@@ -37,9 +37,15 @@ export class ArticulosService {
   }
   
 
-  putArticulo(newArt:Articles){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.put(this.rutafinal + '/' + newArt.id, newArt, { headers: headers });
+  putArticulo(newArt:FormData){
+    var rut=ruta+"/modificarArticulo";
+
+    const headers = new HttpHeaders();
+        console.log(newArt.get("articulos"));
+    var art: Articles= JSON.parse(newArt.get("articulos") as string);
+    console.log(art.id);
+    
+    return this.httpClient.put(rut + '/' + art.id, newArt, { headers: headers });
   }
 
   

@@ -1,6 +1,6 @@
 <body>
   <div class="back-button">
-    <button onclick="window.history.back()">&#8592; Volver</button>
+    <button routerLink="/home">&#8592; Volver</button>
   </div>
 
   <img src="http://192.168.1.60:3002/assets/FORILogoRedi.png" alt="no" />
@@ -48,7 +48,8 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of arrArticulos">
+            <tr *ngFor="let item of arrArticulos" 
+            routerLink="/verArticulo/{{item.id}}"            >
               <td>
                 <a [href]="'http://192.168.1.60:3002' + item.imagen" download>
                   <mat-icon>visibility</mat-icon>
@@ -92,6 +93,7 @@
                 <button class="action-btn btn-save">Cambiar Proyecto</button>
               </td>
             </tr>
+
           </tbody>
         </table>
       </div>
