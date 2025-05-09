@@ -24,7 +24,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './control-stock.component.html',
   styleUrl: './control-stock.component.css',
   imports: [FormsModule,
-    
+
   ]
 })
 export class ControlStockComponent {
@@ -52,7 +52,7 @@ export class ControlStockComponent {
   dialog: MatDialog = inject(MatDialog);
   router: Router = inject(Router);
   datePipe: DatePipe = inject(DatePipe);
-  popup:ToastrService=inject(ToastrService);
+  popup: ToastrService = inject(ToastrService);
   usuario: string = "";
 
   newUser: Users = {
@@ -64,24 +64,31 @@ export class ControlStockComponent {
     idRol: 0,
     idDepartamento: 0
   }
- 
+
   constructor() {
     this.loadCategories();
- 
+
     this.loadTypesByIdCategory(this.newArticle.idCategoria);
- 
-   this.usuario = this.authService.getIdUsuario();
- 
+
+    this.usuario = this.authService.getIdUsuario();
+
     this.cargarNombreUsuario();
   }
- 
- 
- loadCategories(): void {
+
+  //
+  //
+  //
+
+
+  //
+  //
+  //
+  loadCategories(): void {
     this.categorieService.getAllCategorias().subscribe({
       next: (data: any) => {
         this.arrCategories = new CategoriesMap().get(data);
         console.log('Respuesta del backend:', data);
-      
+
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error al cargar categorías:', err);
@@ -250,8 +257,8 @@ export class ControlStockComponent {
       numSerie: undefined,
       marca: undefined,
       detalles: undefined,
-      imagen:'',
-      precio:0
+      imagen: '',
+      precio: 0
     };
   }
 
@@ -308,8 +315,6 @@ export class ControlStockComponent {
   referenciaValida: boolean = false;  // Indica si la referencia es válida
   referenciaError: boolean = false;  // Indica si hay un error con la referencia
 
-
-
   // Función para cancelar la búsqueda y limpiar el estado
   cancelarBusqueda(): void {
     this.inputRef = '';  // Limpia el campo de entrada
@@ -342,13 +347,11 @@ export class ControlStockComponent {
           break;
         }
       }
-      if(this.comprobacion===false){
+      if (this.comprobacion === false) {
         this.openDialog();
       }
     });
   }
-
-
 
   showSuccess() {
     this.popup.success('¡Movimiento realizado correctamente!', '¡Perfecto!');

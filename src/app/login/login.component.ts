@@ -22,7 +22,6 @@ export class LoginComponent {
     console.log(localStorage.getItem('idRol'));
   }
 
-  // 🟢 Método que se ejecuta cuando el usuario hace clic en "Iniciar sesión".
   login() {
     console.log(this.username);
     console.log("bien1");
